@@ -1,5 +1,5 @@
 ---
-title: "스프링"
+title: "Spring"
 layout: archive
 permalink: /spring/
 author_profile: true
