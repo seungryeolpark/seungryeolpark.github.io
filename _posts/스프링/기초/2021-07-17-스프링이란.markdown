@@ -54,7 +54,6 @@ public class MemberService {
     private MemberRepository memberRepository = new MemoryMemberRepository();
 }
 ```
-
 ```java
 public class MemberService {
 //  private MemberRepository memberRepository = new MemoryMemberRepository();
