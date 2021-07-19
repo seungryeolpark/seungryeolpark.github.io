@@ -74,11 +74,11 @@ public class MemberService {
   + **DIP 문제점**
     + 인터페이스에 의존하지만, 구현클래스도 동시에 의존한다. -> DSP 위반
     + MemberService 클라이언트가 구현 클래스를 직접 선택
-    + ```java
-    + public class MemberService {
-    + private MemberRepository memberRepository = new MemoryMemberRepository();
-    + }
-    + ```
+ ```java
+public class MemberService {
+    private MemberRepository memberRepository = new MemoryMemberRepository();
+}
+```
 
 ### 결론
 + 객체 지향의 핵심은 다형성 (대부분의 원칙에서 다형성과 관계가 있다)  
