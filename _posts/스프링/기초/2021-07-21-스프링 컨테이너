@@ -1,0 +1,16 @@
+---
+title: 스프링 컨테이너
+categories: spring
+---
+
+## ApplicationContext
+```java
+//스프링 컨테이너 생성
+ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+```
++ ApplicationContext는 스프링 컨테이너이면서 인터페이스이다.
++ 스프링 컨테이너는 XML를 기반으로 만들 수 있고, 애노테이션 기반의 자바 설정 클래스로 만들 수 있다. 
+(위의 소스코드는 AppConfig 자바 설정 클래스로 스프링 컨테이너를 만든 것이다)
+
+### 스프링 컨테이너 생성 과정  
++ 1.스프링 컨테이너 생성
