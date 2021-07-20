@@ -14,5 +14,5 @@ ApplicationContext applicationContext = new AnnotationConfigApplicationContext(A
 
 ### 스프링 컨테이너 생성 과정  
 + 1.스프링 컨테이너 생성
-![스프링 컨테이너1](https://user-images.githubusercontent.com/48073115/126323300-099ef436-e3cf-4bec-a1dd-3e08e62b7fe9.png)
++ ![스프링 컨테이너1](https://user-images.githubusercontent.com/48073115/126323300-099ef436-e3cf-4bec-a1dd-3e08e62b7fe9.png)
 
