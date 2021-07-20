@@ -102,5 +102,5 @@ public class MemberService {
 + 이상적으로는 모든 설계에 인터페이스를 부여하는 것이 좋지만 인터페이스를 도입하면 추상화라는 비용이 발생한다.  
 기능을 확장할 가능성이 없다면, 구체 클래스를 직접 사용하고, 향후 꼭 필요할 때 리펙터링해서 인터페이스를 도입하는 것도 방법이다.  
 
-출처 - [스프링 핵심 원리 - 기본편 ](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard, "인프런")
+출처 - [스프링 핵심 원리 - 기본편 ](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
 
