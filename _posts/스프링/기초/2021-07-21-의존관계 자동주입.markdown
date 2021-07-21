@@ -284,6 +284,6 @@ public DiscountPolicy discountPolicy() {
 ```
 
 **Qualifier 정리**
-+ 1. @Qualifier끼리 매칭
-+ 2. 빈 이름 매칭
-+ 3. NoSuchBeanDefinitionException 예외 발생
+1. @Qualifier끼리 매칭
+2. 빈 이름 매칭
+3. NoSuchBeanDefinitionException 예외 발생
