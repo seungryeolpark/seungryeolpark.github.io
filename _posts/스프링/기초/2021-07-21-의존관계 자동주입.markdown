@@ -74,4 +74,5 @@ public class OrderServiceImpl implements OrderService {
   @Autowired
   private DiscountPolicy discountPolicy;
 }
+```
   + 순수한 자바 테스트 코드는 @Autowired가 동작하지 않는다. @SpringBootTest 처럼 스프링 컨테이너를 테스트에 통합되는 경우에만 가능하다.
