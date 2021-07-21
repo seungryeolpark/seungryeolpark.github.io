@@ -37,5 +37,4 @@ categories: spring
 + @Configuration : 앞서 보았듯이 스프링 설정 정보로 인식하고, 스프링 빈이 싱글톤을 유지하도록 추가 처리를 한다.
 + @Service : 사실 @Service는 특별한 처리를 하지 않는다. 대신 개발자들이 핵심 비지니스 로직이 있는 비지니스 계층을 인식하는데 도움이 된다.
 
-
-
+출처 - [스프링 핵심 원리 - 기본편 ](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8/dashboard)
