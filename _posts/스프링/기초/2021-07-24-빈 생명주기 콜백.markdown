@@ -25,6 +25,7 @@ categories: spring
 + 설정 정보에 초기화 메서드, 종료 메서드 지정
 + @PostConstruct, @PreDestory 애노테이션 지원
 
+
 ## 인터페이스 InitializingBean, DisposableBean
 + InitializingBean은 afterPropertiesSet() 메서드로 초기화를 지원한다.
 + DisposableBean은 destroy() 메서드로 소멸을 지원한다.
