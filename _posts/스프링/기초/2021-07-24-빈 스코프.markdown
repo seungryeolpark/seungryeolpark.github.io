@@ -234,6 +234,98 @@ public int logic() {
 + 프로토타입 빈은 매번 사용할 때 마다 의존관계 주입이 완료된 새로운 객체가 필요할때 사용하면 된다.
 + 그런데 실무에서 웹 애플리케이션을 개발해보면, 싱글톤 빈으로 대부분의 문제를 해결할 수 있기 때문에 프로토타입 빈을 직접적으로 사용하는 일은 매우 드물다.
 + ObjectProvider, JSR330 Provider 등은 프로토타입 뿐만 아니라 DL이 필요한 경우는 언제든지 사용할 수 있다.
++ 특별히 다른 컨테이너를 사용할 일이 없다면 ObjectProvider, 그게 아니라면 JSR330 Provider 를 사용하면 된다.
+
+## 웹 스코프
+**웹 스코프의 특징**
++ 웹 스코프는 웹 환경에서만 동작한다.
++ 웹 스코프는 프로토타입과 다르게 스프링이 해당 스코프의 종료시점까지 관리한다. 따라서 종료 메서드가 호출된다.
+
+**웹 스코프 종류**
++ request : HTTP 요청 하나가 들어고 나갈 때 까지 유지되는 스코프, 각각의 HTTP 요청마다 별도의 빈 인스턴스가 생성되고, 관리된다.
++ session : HTTP Session과 동일한 생명주기를 가지는 스코프
++ application : 서블릿 컨텍스트(ServletContext)와 동일한 생명주기를 가지는 스코프
++ websocket : 웹 소켓과 동일한 생명주기를 가지는 스코프
+
+**HTTP request 요청 당 각각 할당되는 request 스코프
+
+![빈 스코프9](https://user-images.githubusercontent.com/48073115/126854328-5e660de7-a760-4fae-b80e-0b3856c8f95d.png)
+
+### request 스코프 예제 개발
+다음과 같이 로그가 남도록 request 스코프를 활용해서 추가 기능을 개발해보자.  
+
+[d06b992f...] request scope bean create
+[d06b992f...][http://localhost:8080/log-demo] controller test
+[d06b992f...][http://localhost:8080/log-demo] service id = testId
+[d06b992f...] request scope bean close
+
++ 기대하는 공통 포멧 : [UUID][requestURL]{message}
++ UUID를 사용해서 HTTP 요청을 구분하자.
++ requestURL 정보도 추가로 넣어서 어떤 URL을 요청해서 남은 로그인지 확인하자.
+
+코드 예시  
+**MyLogger**
+```java
+@Component
+@Scope(value = "request")
+public class MyLogger {
+    private String uuid;
+    private String requestURL;
+    
+    public void setRequestURL(String requestURL) {
+        this.requestURL = requestURL;
+    }
+    
+    public void log(String message) {
+        System.out.println("[" + uuid + "]" + "[" + requestURL + "] " + message);
+    }
+    
+    @PostConstruct
+    public void init() {
+        uuid = UUID.randomUUID().toString();
+        System.out.println("[" + uuid + "] request scope bean create : " + this);
+    }
+    
+    @PreDestroy
+    public void close() {
+        System.out.println("[" + uuid + "] request scope bean close : " + this);
+    }
+}
+```
+
++ 로그를 출력하기 위한 MyLogger 클래스이다.
++ @Scope(value = "request") 를 사용해서 request 스코프로 지정했다. 이제 이 빈은 HTTP 요청당 하나씩 생성되고 HTTP 요청이 끝나는 시점에 소멸된다.
++ 이 빈이 생성되는 시점에 자동으로 @PostConstruct 초기화 메서드를 사용해서 uuid를 생성해서 저장해둔다. 이 빈은 HTTP 요청당 하나씩 생성되므로, uuid를 저장해두면 다른 HTTP 요청과 구분할 수 있다.
++ 이 빈이 소멸되는 시점에 @PreDestroy 를 사용해서 종료 메시지를 남긴다.
++ requestURL 은 이 빈이 생성되는 시점에는 알 수 없으므로 외부에서 setter 로 입력받는다.
+
+**LogDemoController**
+
+```java
+@Controller
+@RequiredArgsConstructor
+public class LogDemoController {
+    private final LogDemoService logDemoService;
+    private final MyLogger myLogger;
+    
+    @RequestMapping("log-demo")
+    @ResponseBody
+    public String logDemo(HttpServletRequest request) {
+        String requestURL = request.getRequestURL().toString();
+        myLogger.setRequestURL(requestURL);
+        
+        myLogger.log("controller test");
+        logDemoService.logic("testId");
+        return "OK";
+    }
+}
+```
+
++ 로거가 잘 작동하는지 확인하는 테스트용 컨트롤러다.
++ 여기서 HttpServletRequest를 통해서 요청 URL을 받았다.
+  + requestURL 값 http://localhost:8080/log-demo
++ 이렇게 받은 requestURL 값을 myLogger 에 저장해둔다. myLogger 는  HTTP 요청당 각각 구분되므로 다른 HTTP 요청 때문에 값이 섞이는 걱정은 하지 않아도 된다.
++ 컨트롤러에서 controller test 라는 로그를 남긴다.
 
 
 
