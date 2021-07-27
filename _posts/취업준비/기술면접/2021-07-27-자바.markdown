@@ -122,3 +122,43 @@ categories: jobPreparation
 + StringBuffer는 String보다 무거운 편에 속한다.
 + StringBuffer 객체를 생성하는 것은 일반 String을 사용하는 것보다 메모리 사용량도 많고 속도도 느리다.
 + 따라서 문자열 추가나 변경등의 작업이 많을 경우에는 StringBuffer, 문자열 변경 작업이 거의 없는 경우에는 String을 사용하는 것이 좋다.
+
+## 자바의 메모리 영역
+### 메서드 영역
++ static 변수, 전역변수, 코드에서 사용되는 class 정보 등이 올라간다.
++ 코드에서 사용되는 class들을 로더로 읽어 class별로 런타임 필드데이터, 메서드 데이터 등을 분류해 저장한다.
+
+### 스택
++ 지역변수, 함수(메서드) 등이 할당되는 LIFO(Last In First Out) 방식의 메모리
+
+### 힙
++ new 연산자를 통한 동적 할당된 객체들이 저장되며, Garbage Collection에 의해 메모리가 관리되어 진다.
+
+## DAO, DTO
+### DAO
++ 데이터베이스의 데이터에 접근을 위한 객체
++ 데이터베이스에 접근을 위한 로직과 비즈니스 로직을 분리하기 위해서 사용한다.
++ DB를 사용해 데이터를 조회하거나 조작하는 기능을 전담하도록 만든 오브젝트
+
+### DTO
++ 각 계층간 데이터 교환을 위한 객체
++ 여기서 말하는 계층이란 Controller, View, Business Layer, Persistent Layer를 말한다.
++ VO(Value Object)로도 말해진다.
+
+## 변수 명명법
+### 헝가리언 표기법
++ 자료형을 식별자에 같이 포함
++ ex) int inum; int int_num;
+
+### 파스칼 표기법
++ 식별자가 한 단어나 혹은 여러 단어로 조합, 각 단어의 첫문자만 대문자로
++ ex) KorScore
+
+### 캐멀 표기법
++ 모든 단어를 공백없이 조합, 첫단어의 첫문자는 소문자로
++ ex) korScore
+
+### 스네이크 표기법
++ ex) kor_score
+
+출처 - [기술면접 - JAVA](https://sas-study.tistory.com/53?category=774876)
