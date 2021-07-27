@@ -104,3 +104,21 @@ categories: jobPreparation
 
 ### Private
 + 같은 클래스 내에서만 접근 가능
+
+## Singleton Design Pattern
++ 클래스 인스턴스가 하나만 만들어지도록 하고, 그 인스턴스에 대한 전역 접근을 제공한다.
+
+## String, StringBuffer 차이
+### String
++ 자바의 기본 데이터 타입인 int, float, char 등과 다르게 데이터 타입이 아닌 객체이다.
++ 불변의 객체이다.(final char 배열 형태이다.) -> 내용의 추가와 삭제가 되지 않는다.
+
+### StringBuffer
++ 문자열을 추가하거나 변경 할 때 주로 사용하는 객체이다.
+
+### String, StringBuffer 차이
++ 문자열을 더할 때 StringBuffer 객체는 단 한번만 생성된다.
++ String은 + 연산이 있을 때마다 새로운 String 객체가 생성된다.(문자열 간 + 연산이 있는 경우 자바는 자동으로 새로운 String 객체를 만들어 낸다.)
++ StringBuffer는 String보다 무거운 편에 속한다.
++ StringBuffer 객체를 생성하는 것은 일반 String을 사용하는 것보다 메모리 사용량도 많고 속도도 느리다.
++ 따라서 문자열 추가나 변경등의 작업이 많을 경우에는 StringBuffer, 문자열 변경 작업이 거의 없는 경우에는 String을 사용하는 것이 좋다.
