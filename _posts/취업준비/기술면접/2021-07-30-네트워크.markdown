@@ -169,11 +169,12 @@ categories: jobPreparation
   + 대표적으로 HTTP, FTP 등의 프로토콜이 응용 계층에 속한다.
 
 ### 허브, 리피터
+
 <table>
   <tr>
     <th></th>
-    <th>리피터</th>
-    <th>허브</th>
+    <th width=30%>리피터</th>
+    <th width=30%>허브</th>
   </tr>
   <tr>
     <td>공통점</td>
