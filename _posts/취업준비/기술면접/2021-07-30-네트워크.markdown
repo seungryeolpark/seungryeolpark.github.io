@@ -173,8 +173,8 @@ categories: jobPreparation
   <thead>
     <tr>
       <th></th>
-      <th>리피터</th>
-      <th>허브</th>
+      <th width="40%">리피터</th>
+      <th width="40%">허브</th>
     </tr>
   </thead>
   <tbody>
