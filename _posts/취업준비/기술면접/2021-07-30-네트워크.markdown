@@ -173,8 +173,8 @@ categories: jobPreparation
 <table>
   <tr>
     <th></th>
-    <th width=30%>리피터</th>
-    <th width=30%>허브</th>
+    <th width=40%>리피터</th>
+    <th width=40%>허브</th>
   </tr>
   <tr>
     <td>공통점</td>
