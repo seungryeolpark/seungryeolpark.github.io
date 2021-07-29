@@ -83,3 +83,10 @@ categories: jobPreparation
 
 ### 바이트 스트림 서비스
 + 한번에 한 바이트씩 연속적으로 전송되는 데이터의 흐름과 같이 끊임없이 연속되는 바이트 열.
+
+## 3-Handshake, 4-Handshake
+### 3-Handshake
+![네트워크1](https://user-images.githubusercontent.com/48073115/127558949-05e26b5a-05fa-4aff-acda-7576bfc06ada.png)
+
++ 양쪽 모두 데이터를 전송할 준비가 되었다는 것을 보장하고, 실제로 데이터 전달이 시작하기 전에 한쪽이 다른 쪽이 준비되었다는 것을 알수 있도록 한다.
++ 양쪽 모두 상대편에 대한 초기 순차일련번호를 얻을 수 있도록 한다.
