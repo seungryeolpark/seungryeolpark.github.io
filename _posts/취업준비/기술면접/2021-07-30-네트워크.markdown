@@ -168,7 +168,7 @@ categories: jobPreparation
   + 한마디로 우리가 사용하는 사용자 인터페이스를 제공하는 프로그램 등을 말한다.
   + 대표적으로 HTTP, FTP 등의 프로토콜이 응용 계층에 속한다.
 
-### 허브, 리피터
+## 허브, 리피터
 <table>
   <thead>
     <tr>
@@ -187,6 +187,48 @@ categories: jobPreparation
       <td>차이점</td>
       <td></td>
       <td>패킷 모니터링과 멀티 포트를 지원하며 문제가 생긴 곳을 고립시킬 수 있음</td>
+    </tr>
+  </tbody>
+</table>
+
+## 브릿지, 스위치
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th width="40%">브릿지</th>
+      <th width="40%">스위치</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>공통점</td>
+      <td colspan="2"> 데이터링크 계층에서 전송 거리를 연장하는 장치</td>
+    </tr>
+    <tr>
+      <td>차이점</td>
+      <td>IP 주소에서 MAC 주소를 알아냄</td>
+      <td>MAC 주소에서 IP 주소를 알아냄</td>
+    </tr>
+  </tbody>
+</table>
+
+## ARP, RARP
+<table>
+  <thead>
+    <th></th>
+    <th width="40%">ARP</th>
+    <th width="40%">RARP</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>공통점</td>
+      <td colspan="2"> 네트워크 계층에서 사용되는 주소 결정 프로토콜</td>
+    </tr>
+    <tr>
+      <td>차이점</td>
+      <td>IP 주소에서 MAC 주소를 알아냄</td>
+      <td>MAC 주소에서 IP 주소를 알아냄</td>
     </tr>
   </tbody>
 </table>
