@@ -233,3 +233,14 @@ categories: jobPreparation
   </tbody>
 </table>
 
+## 게이트웨이
++ 외부로 연결되는 통로, 로컬망 라우터와 외부망 라우터 간의 통로
+
+## 로드 밸런싱
++ 분산식 웹 서비스로 여러 서버에 부하(Load)를 나누어 줌
++ Round Robin, Least Connection, Response Time, Hash 등의 기법이 있음
++ Round Robin
+  + 각 서버에 session을 순서대로 연결하는 방식, 모든 클라이언트를 똑같이 취급 하고, 서버별 처리량을 기억하고 있어야 함.
++ Least Connection
+  + 클라이언트와 서버별 연결된 connection 수를 고려하여 가장 적은 서버에 연결하는 방식
+
