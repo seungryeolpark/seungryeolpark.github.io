@@ -244,3 +244,35 @@ categories: jobPreparation
 + Least Connection
   + 클라이언트와 서버별 연결된 connection 수를 고려하여 가장 적은 서버에 연결하는 방식
 
+## 프로토콜
++ 컴퓨터 간 데이터 통신을 원할히 하기 위해 규정한 약속
++ 신호 송신의 순서(handshake)나 데이터표현법, 오류 검출법 등을 정한 것
+
+## HTTP, HTTPS 프로토콜
+### HTTP
++ 하이퍼텍스트를 전송하는 규약
++ 하이퍼텍스트 : 한 문서에서 다른 문서로 즉시 접근할 수 있는 텍스트
++ 비연결성 프로토콜, Request 에 대한 Response 만 전달되고 연결 유지가 안된다.
+
+### 비연결성을 해결하기 위한 방법
++ Cookie/Session : Cookie에 클라이언트에 대한 정보를 저장해뒀다가 사용하거나 Session을 등록해서 유지하는 방식
++ Session Storage/Local Storage : HTML5에서 제공, 세션 스트로지는 세션이 유지되고 있을 때 까지 브라우저 내부 저장소에서 저장하고 세션이 끊기면 자동으로 없어짐, 로컬 스트로지는 사용자나 프론트엔드 내부적으로 삭제 하지 않는 이상 영구적으로 저장됨
+
+### HTTPS
++ HTTP + SSL, HTTP로 통신하는 소켓을 SSL(Secure Sokect Layer) or TLS(Transport Layer Security)라는 프로콜로 대체한 것
++ HTTP 는 TCP 와 직접 통신하지만, HTTPS 에서는 SSL 과 통신하고 SSL 이 TCP 와 통신하는 방식
++ SSL 을 사용하기 때문에 암호화와 증명서, 안전성 보호를 이용할 수 있음
++ 공통키 암호화 방식과 공개키 암호화 방식을 혼합한 하이브리드 암호 시스템 사용
++ 공통키를 공개키 암호화 방식으로 교환하고 이후 통신은 공통키 암호를 사용하는 방식
+
+### HTTP Request - GET, POST 차이점
++ GET : 서버에 데이터를 전달할 때 URL Query 를 사용해야 하므로 보안에 취약, 데이터를 받는 용도로 적합
++ POST : 데이터를 Header 에 넣어서 전송하므로 헤더를 열어보지 않으면 확인할 수 없음, DB 내용을 갱신하거나 서버로 데이터를 전송할때 적합
++ SSL 을 이용한 HTTPS 프로토콜로 데이터 전송을 암호화하면 보안성을 보완할 수 있음, URL 뒤에 붙는 쿼리스트링 내용 모두 암호화되어 전송되기 때문에 보안성을 강화함
+
+### Restful API, 일반적인 HTTP URL
++ 일반적인 HTTP URL : 기능에 중점을 두고 설계, ex) 회원 정보 호출 - '/getUser'
++ Restful API : 자원에 중점을 두고 설계, ex) '/user' 하위에 기능에 대한 구분을 추가, POST, GET, DELETE, PUT 등의 HTTP 메서드를 사용
+
+
+
