@@ -274,6 +274,60 @@ categories: jobPreparation
 + 일반적인 HTTP URL : 기능에 중점을 두고 설계, ex) 회원 정보 호출 - '/getUser'
 + Restful API : 자원에 중점을 두고 설계, ex) '/user' 하위에 기능에 대한 구분을 추가, POST, GET, DELETE, PUT 등의 HTTP 메서드를 사용
 
+## 주요 포트 넘버
+<table>
+  <thead>
+    <tr>
+      <th>프로토콜</th>
+      <th>포트 번호</th>
+      <th>내용</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP</td>
+      <td>80</td>
+      <td>웹을 지원하기 위한 프로토콜<br>
+        GET, PUT 같은 프로토콜 기능을 포함해서 웹 서버에게 어떠한 Content를 요청 또는 웹 서버로 정보를 보냄</td>
+    </tr>
+    <tr>
+      <td>FTP</td>
+      <td>20, 21</td>
+      <td>TCP를 활용해 대량의 파일을 송신하고 수신하는 프로토콜</td>
+    </tr>
+    <tr>
+      <td>TFTP</td>
+      <td>69</td>
+      <td>UDP를 사용하는 파일 전송 프로토콜<br>
+        라우터나 스위치 등의 네트워크 장비의 IOS 이미지를 업로드, 다운로드할 때 사용</td>
+    </tr>
+    <tr>
+      <td>Telent</td>
+      <td>23</td>
+      <td>원격지에 있는 장비로 표준 터미널 에뮬레이션 기능을 제공함<br>
+        네트워크 장비에서는 텔넷을 통해 원격지에서 장비를 설정</td>
+    </tr>
+    <tr>
+      <td>SMTP</td>
+      <td>25</td>
+      <td>컴퓨터 네트워크를 통해 전자 메일을 전송하는 프로토콜<br>
+        받을 때는 POP3 를 활용</td>
+    </tr>
+    <tr>
+      <td>SNMP</td>
+      <td>161</td>
+      <td>네트워크 장비를 모니터링하고 제어하기 위해 사용하는 프로토콜<br>
+        네트워크 장애 관리, 장비 설정, 통계 성능 및 보안 등을 관리</td>
+    </tr>
+    <tr>
+      <td>DNS</td>
+      <td>53</td>
+      <td>도메인 주소를 IP ADDRESS 로 변경<br>
+        모든 Public IP 주소와 호스트 이름은 DNS에 저장되고 나중에 해당 IP 주소로 변환</td>
+    </tr>
+  </tbody>
+</table>
+        
 ## 프록시 서버
 + 클라이언트가 프록시 서버를 통해 다른 네트워크 서비스에 간접적으로 접근을 할 수 있게 하는 것
 + 프록시 서버는 요청된 내용을 캐시에 저장하고 다음에 같은 요청이 들어오면 캐시에 저장된 정보를 제공해 전송시간을 단축함
