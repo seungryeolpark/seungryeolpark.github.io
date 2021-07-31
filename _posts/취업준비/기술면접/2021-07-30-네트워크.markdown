@@ -340,7 +340,7 @@ categories: jobPreparation
 11. 렌더 트리를 기반으로 브라우저의 크기에 따라 각 노드들의 크기를 결정
 12. 렌더링 엔진이 배치를 시작(페인팅)
 
-출처 - [네트워크 면접 질문](https://hyonee.tistory.com/136?category=913823)
+출처 - [네트워크 면접 예상 질문과 답변](https://hyonee.tistory.com/136?category=913823)
 
 
 
