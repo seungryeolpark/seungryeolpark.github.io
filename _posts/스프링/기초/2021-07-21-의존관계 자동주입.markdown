@@ -1,6 +1,6 @@
 ---
 title: 의존관계 자동주입
-categories: spring
+categories: springBase
 ---
 
 ## 다양한 의존관계 주입 방법

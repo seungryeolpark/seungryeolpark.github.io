@@ -1,6 +1,6 @@
 ---
 title: "자바"
-categories: jobPreparation
+categories: JP_TI
 ---
 
 ## Java

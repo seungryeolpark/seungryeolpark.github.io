@@ -1,6 +1,6 @@
 ---
 title: 빈 생명주기 콜백
-categories: spring
+categories: springBase
 ---
 
 ## 빈 생명주기 콜백 시작

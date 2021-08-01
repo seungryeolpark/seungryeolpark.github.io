@@ -1,6 +1,6 @@
 ---
 title: "데이터베이스"
-categories: jobPreparation
+categories: JP_TI
 ---
 
 ## DBMS, RDBMS

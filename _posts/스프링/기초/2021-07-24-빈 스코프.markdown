@@ -1,6 +1,6 @@
 ---
 title: 빈 스코프
-categories: spring
+categories: springBase
 ---
 
 ## 빈 스코프

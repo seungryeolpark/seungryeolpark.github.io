@@ -1,6 +1,6 @@
 ---
 title: 스프링 컨테이너
-categories: spring
+categories: springBase
 ---
 
 ## ApplicationContext

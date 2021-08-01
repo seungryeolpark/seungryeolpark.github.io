@@ -1,6 +1,6 @@
 ---
 title: "네트워크"
-categories: jobPreparation
+categories: JP_TI
 ---
 ## 네트워크
 + 물리적 전송 매체를 사용하여 서로 연결된 장치 세트

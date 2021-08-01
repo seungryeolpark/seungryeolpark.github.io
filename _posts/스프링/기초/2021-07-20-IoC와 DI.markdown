@@ -1,6 +1,6 @@
 ---
 title: IoC와 DI
-categories: spring
+categories: springBase
 ---
 
 ## 제어의 역전 IoC(Inversion of Control)
