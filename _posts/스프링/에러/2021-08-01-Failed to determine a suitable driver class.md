@@ -27,3 +27,5 @@ public class Application {
 
 다시 실행하면 정상적으로 실행된다.
 
+출처 - [[SpringBoot]Failed to determine a suitable driver class 에러](https://lemontia.tistory.com/586)
+
