@@ -1,7 +1,7 @@
 ---
 title: "기초"
 layout: archive
-permalink: /spring/base
+permalink: spring/base
 author_profile: true
 sidebar_main: true
 ---
