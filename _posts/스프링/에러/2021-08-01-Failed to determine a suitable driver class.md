@@ -15,8 +15,7 @@ SpringBoot는 어플리케이션이 시작될 때 필요한 기본 설정들을 
 스프링 메인 클래스에 어노테이션을 추가한다.
 
 ```java
-@SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
 public class Application {
 
     public static void main(String[] args) {
