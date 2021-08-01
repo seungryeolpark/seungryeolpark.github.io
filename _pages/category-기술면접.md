@@ -1,7 +1,7 @@
 ---
 title: "취업준비"
 layout: archive
-permalink: JP/TI
+permalink: categories/JP/TI
 author_profile: true
 sidebar_main: true
 ---
