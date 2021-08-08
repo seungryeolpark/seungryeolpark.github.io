@@ -30,6 +30,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springMVC" %}
+                        <li><a href="/categories/spring/mvc" class="">MVC ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
         <span class="nav__sub-title">취업 준비</span>
             <ul>
                 {% for category in site.categories %}
