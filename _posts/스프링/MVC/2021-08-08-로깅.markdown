@@ -39,4 +39,4 @@ application.properties
 + 성능도 일반 System.out보다 좋다. (내부 버퍼링, 멀티 쓰레드 등등)
 + 그래서 실무에서는 꼭 로그를 사용해야 한다.
 
-출처 - (스프링 MVC 1편 - 백엔드 웹 개발 핵심 )[https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1/dashboard]
+출처 - [스프링 MVC 1편 - 백엔드 웹 개발 핵심 ](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1/dashboard)
