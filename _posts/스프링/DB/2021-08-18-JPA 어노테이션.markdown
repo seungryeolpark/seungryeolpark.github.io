@@ -1,6 +1,6 @@
 ---
 title: JPA 어노테이션
-categories: springDB
+categories: springMVC
 ---
 
 ### @Id
