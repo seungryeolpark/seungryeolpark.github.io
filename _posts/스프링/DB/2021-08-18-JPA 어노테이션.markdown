@@ -8,3 +8,24 @@ categories: springDB
 
 ### @GeneratedValue
 + 주키(primary Key)의 값을 위한 자동 생성 전략을 명시하는데 사용한다.
+
+### @PersistenceContext
++ 엔티티 메니저(EntityManager) 주입
+
+### @Transactional
++ 트랜잭션, 영속성 컨텍스트
++ readOnly=true
+  + 데이터의 변경이 없는 읽기 전용 메서드에 사용, 영속성 컨텍스트를 플러시 하지 않으므로 약간의 성능 향상(읽기 전용에는 다 적용)
++ 데이터베이스 드라이버가 지원하면 DB에서 성능 향상
++ 테스트에서 사용할 때 반복 가능한 테스트 지원, 각각의 테스트를 실행할 때마다 **트랜잭션을 시작하고 테스트가 끝나면 트랜잭션을 강제로 롤백**(이 어노테이션이 테스트 케이스에서 사용될 때만 롤백)
+
+### @Autowired
++ 생성자 Injection 많이 사용, 생성자가 하나면 생략 가능
+
+## 테스트 어노테이션
+
+### @RunWith(SpringRunner.class)
++ 스프링과 테스트 통합
+
+### SpringBootTest
++ 스프링 부트 띄우고 테스트(이게 없으면 @Autowired 다 실패)
