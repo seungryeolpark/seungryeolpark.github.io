@@ -13,6 +13,9 @@ categories: springMVC
   + id 는 th:field 에서 지정한 변수 이름과 같다.
   + name 은 th:field 에서 지정한 변수 이름과 같다.
   + value 는 th:field 에서 지정한 변수의 값을 사용한다.
++ th:field="*{...}"
+  + thymeleaf의 th:field 는 매우 똑똑하게 동작하는데, 정상 상황에서는 모델 객체의 값을 사용하지만, 오류가 발생하면 FieldError에 보관한 값을 사용해서 값을 출력한다.
+  + 타입 오류로 바인딩에 실패하면 스프링은 FieldError 를 생성하면서 사용자가 입력한 값을 넣어둔다. 그리고 해당 오류를 BindingResult 에 담아서 컨트롤러를 호출한다. 따라서 타입 오류 같은 바인딩 실패시에도 사용자의 오류 메시지를 정상 출력할 수 있다.
 
 **예제**
 ```html
