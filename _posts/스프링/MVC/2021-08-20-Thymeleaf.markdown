@@ -16,7 +16,7 @@ categories: springMVC
 
 **예제**
 ```html
-<form action="/signup/add" method="post" th:action th:object="${signupMember}" accept-charset="utf-8" class="form" role="form">   <legend>회원가입</legend>
+<form action="/signup" method="post" th:action th:object="${signupMember}" accept-charset="utf-8" class="form" role="form">   <legend>회원가입</legend>
           <div>
             <label for="loginId">아이디</label>
             <input type="text" id="loginId" th:field="*{loginId}" class="form-control" placeholder="아이디를 입력하세요">
