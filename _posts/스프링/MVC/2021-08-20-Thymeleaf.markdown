@@ -14,7 +14,7 @@ categories: springMVC
   + name 은 th:field 에서 지정한 변수 이름과 같다.
   + value 는 th:field 에서 지정한 변수의 값을 사용한다.
 
-예제
+**예제**
 ```html
 <form action="/signup/add" method="post" th:action th:object="${signupMember}" accept-charset="utf-8" class="form" role="form">   <legend>회원가입</legend>
           <div>
