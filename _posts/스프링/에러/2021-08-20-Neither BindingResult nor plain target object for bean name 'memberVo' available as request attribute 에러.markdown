@@ -29,4 +29,4 @@ public String memberInsert(Model model, @ModelAttribute("memberVo"),
 <form action="/signup" method="post" th:action th:object="${signupMember}" accept-charset="utf-8" class="form" role="form">
 ```
   
-출처 - (미니 블로그 : 메모하는 습관)[https://otrodevym.tistory.com/entry/Neither-BindingResult-nor-plain-target-object-for-bean-name-memberVo-available-as-request-attribute]
+출처 - [미니 블로그 : 메모하는 습관](https://otrodevym.tistory.com/entry/Neither-BindingResult-nor-plain-target-object-for-bean-name-memberVo-available-as-request-attribute)
