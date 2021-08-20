@@ -1,0 +1,15 @@
+---
+title: 검증
+categories: springMVC
+---
+
+## BindingResult
+
+### 주의
++ BindingResult bindingResult 파라미터의 위치는 @ModelAttribute 다음에 와야 한다.
+
+```java
+public String addMember(
+            @ModelAttribute signupMember signupMember,
+            BindingResult bindingResult)
+```
