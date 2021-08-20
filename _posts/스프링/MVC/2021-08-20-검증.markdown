@@ -9,7 +9,7 @@ categories: springMVC
 **FieldError 생성자 요약**
 
 ```java
-public FieldError(String objectName, String field, String defaultMessage) {}
+public FieldError(String objectName, String field, String defaultMessage);
 ```
 
 + 필드에 오류가 있으면 FieldError 객체를 생성해서 BindingResult 에 담가두면 된다.
@@ -17,10 +17,22 @@ public FieldError(String objectName, String field, String defaultMessage) {}
 + field : 오류가 발생한 필드 이름
 + defaultMessage : 오류 기본 메시지
 
+```java
+public FieldError(String objectName, String field, @Nullable Object 
+rejectedValue, boolean bindingFailure, @Nullable String[] codes, @Nullable
+Object[] arguments, @Nullable String defaultMessage)
+```
+
++ rejectedValue : 사용자가 입력한 값(거절된 값)
++ bindingFailure : 타입 오류 같은 바인딩 실패인지, 검증 실패인지 구분 값
++ codes : 메시지 코드
++ arguments : 메시지에서 사용하는 인자
++ defaultMessage : 기본 오류 메시지
+
 ### 글로벌 오류 - ObjectError
 **ObjectError 생성자 요약**
 ```java
-public ObjectError(String objectName, String defaultMessage) {}
+public ObjectError(String objectName, String defaultMessage);
 ```
 
 + 특정 필드를 넘어서는 오류가 있으면 ObjectError 객체를 생성해서 BindingResult 에 담가두면 된다.
