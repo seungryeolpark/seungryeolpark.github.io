@@ -26,7 +26,8 @@ public String memberInsert(Model model, @ModelAttribute("memberVo"),
 + 해당 URL의 view 파트에 <form> 태그에서 modelAttribute가 "memberVo"인지 확인
   
 ```html
-<form action="/signup" method="post" th:action th:object="${memberVo}" accept-charset="utf-8" class="form" role="form">
+<form action="/signup" method="post" th:action th:object="${memberVo}" 
+      accept-charset="utf-8" class="form" role="form">
 ```
   
 출처 - [미니 블로그 : 메모하는 습관](https://otrodevym.tistory.com/entry/Neither-BindingResult-nor-plain-target-object-for-bean-name-memberVo-available-as-request-attribute)
