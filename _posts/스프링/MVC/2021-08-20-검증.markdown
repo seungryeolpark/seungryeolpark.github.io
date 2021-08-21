@@ -114,6 +114,25 @@ public String addMember(
 + BindingResult 는 Model 에 자동으로 포함된다.
 
 ### errors 메시지 파일 생성
-**messages.properties**
+**application.yml**
+```yml
+spring:
+  messages:
+    basename: messages, errors
+```
+
+**errors.properties**
 ```properties
+required.signupMember.loginId = 아이디는 필수 값 입니다.
+```
+
+**적용**
+```java
+public String addMember(
+            @ModelAttribute signupMember signupMember,
+            BindingResult bindingResult) {
+            
+             if (!StringUtils.hasText(signupMember.getLoginId())) {
+            bindingResult.rejectValue("loginId", "required");
+            }
 ```
