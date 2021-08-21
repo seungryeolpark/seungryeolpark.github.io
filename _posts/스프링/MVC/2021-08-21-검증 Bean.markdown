@@ -10,10 +10,10 @@ categories: springMVC
 + 검증 오류가 발생하면, FieldError, ObjectError 를 생성해서 BindingResult 에 담아준다.
 
 ### 검증 순서
-1. @ModelAttribute 각각의 필드에 타입 변환 시도
++ 1.@ModelAttribute 각각의 필드에 타입 변환 시도
   + 성공하면 다음으로
   + 실패하면 typeMismatch 로 FieldError 추가
-2. Validator 적용
++ 2.Validator 적용
 
 ### 바인딩에 성공한 필드만 Bean Validaton 적용
 + BeanValidator 는 바인딩에 실패한 필드는 BeanValidation 을 적용하지 않는다.
