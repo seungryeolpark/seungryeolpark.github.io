@@ -4,6 +4,16 @@ categories: springMVC
 ---
 
 ## BindingResult
++ Validator 를 상속받는 클래스에서 객체 값을 검증하는 방식
+
+### @ModelAttribute 에 바인딩 시 타입 오류가 발생한다면?
++ BindingResult 가 없으면 : 400 오류가 발생하면서 컨트롤러가 호출되지 않고, 오류 페이지로 이동한다.
++ BindingResult 가 있으면 : 오류 정보(FieldError)를 BindingResult 에 담아서 컨트롤러를 정상 호출한다.
+
+### BindingResult 에 검증 오류를 적용하는 3가지 방법
+1. @ModelAttribute 의 객체에 타입 오류 등으로 바인딩이 실패하는 경우 스프링이 FieldError 생성해서 BindingResult 에 넣어준다.
+2. 개발자가 직접 넣어준다.
+3. Validator 사용
 
 ### FieldError
 **FieldError 생성자 요약**
@@ -46,4 +56,11 @@ public ObjectError(String objectName, String defaultMessage);
 public String addMember(
             @ModelAttribute signupMember signupMember,
             BindingResult bindingResult)
+```
+
++ BindingResult 는 Model 에 자동으로 포함된다.
+
+### errors 메시지 파일 생성
+**messages.properties**
+```properties
 ```
