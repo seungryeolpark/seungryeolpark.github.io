@@ -2,3 +2,18 @@
 title: 검증 Bean
 categories: springMVC
 ---
+
+## @NotNull, @NotEmpty, @NotBlank
+
+### @NotNull
++ null 만 허용하지 않습니다.
++ "" 나 " " 은 허용합니다.
++ null 이 들어오게 되면, **로직에 예상치 못한 오류**가 발생하거나 **문제가 생길 경우** 사용해야 합니다.
++ 초기화나 공백의 값이 들어와 저장은 되야하지만 null 로 들어온 경우 오류가 나는 변수를 받을 때 사용
+
+### @NotEmpty
++ null 과 "" 둘 다 허용하지 않습니다.
++ " " 은 허용합니다.
+
+### @NotBlank
++ null 과 "", " " 모두 허용하지 않습니다.
