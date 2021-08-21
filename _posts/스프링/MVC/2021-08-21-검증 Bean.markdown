@@ -11,8 +11,8 @@ categories: springMVC
 
 ### 검증 순서
 1. @ModelAttribute 각각의 필드에 타입 변환 시도
-  + 성공하면 다음으로
-  + 실패하면 typeMismatch 로 FieldError 추가
+  1. 성공하면 다음으로
+  2. 실패하면 typeMismatch 로 FieldError 추가
 2. Validator 적용
 
 ### 바인딩에 성공한 필드만 Bean Validaton 적용
