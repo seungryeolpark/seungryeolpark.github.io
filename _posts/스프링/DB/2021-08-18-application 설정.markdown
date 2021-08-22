@@ -12,7 +12,7 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
     username: username
     password: password
-   jpa:
+  jpa:
     hibernate:
       ddl-auto: create
     properties:
