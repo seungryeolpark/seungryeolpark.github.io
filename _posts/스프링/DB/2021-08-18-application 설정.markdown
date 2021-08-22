@@ -12,13 +12,12 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
     username: username
     password: password
-    
-jpa:
-  hibernate:
-    ddl-auto: create
-  properties:
-    show_sql: true
-    format_sql: true
+   jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      show_sql: true
+      format_sql: true
     
 logging.level:
   org.hibernate.SQL: debug
