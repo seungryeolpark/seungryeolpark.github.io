@@ -28,3 +28,45 @@ response.addCookie(idCookie);
 
 + 보통 로그인에 성공하면 쿠키를 생성하고 HttpServletResponse 에 담는다.
 + 쿠키 이름은 memberId 이고, 값은 회원의 id 를 담아둔다.
+
+### 쿠키 사용 예
+**쿠키 변수 사용**
+```java
+@GetMapping("/")
+ public String homeLogin(
+   @CookieValue(name = "memberId", required = false) Long memberId,
+  Model model) {
+```
+
++ @CookieValue 를 사용하면 편리하게 쿠키를 조회할 수 있다.
++ 로그인 하지 않은 사용자도 홈에 접근할 수 있기 때문에 required = false 를 사용한다.
+
+**쿠키 삭제**
+```java
+private void expireCookie(HttpServletResponse response, String cookieName) {
+   Cookie cookie = new Cookie(cookieName, null);
+   cookie.setMaxAge(0);
+   response.addCookie(cookie);
+}
+```
+
++ cookie.setMaxAge(0) 를 사용하면 해당 쿠키는 즉시 종료된다.
+
+### 쿠키 보안 문제
+**보안 문제**
++ 쿠키 값은 임의로 변경할 수 있다.
+  + 클라이언트가 쿠키를 강제로 변경하면 다른 사용자가 된다.
+  + 실제 웹브라우저 개발자모드(F12) -> Application -> Cookie 변경으로 확인
+  + Cookie : memberId=1 -> Cookie : memberId=2 (다른 사용자의 이름이 보임)
++ 쿠키에 보관된 정보는 훔쳐갈 수 있다.
++ 해커가 쿠키를 한번 훔쳐가면 평생 사용할 수 있다.
+  + 해커가 쿠키를 훔쳐가서 그 쿠키로 악의적인 요청을 계속 시도할 수 있다.
+
+**대안**
++ 쿠키에 중요한 값을 노출하지 않고, 사용자 별로 예측 불가능한 임의의 토큰(랜덤 값)을 노출하고, 서버에서 토큰과 사용자 id를 매핑해서 인식한다. 그리고 서버에서 토큰을 관리한다.
++ 토큰은 해커가 임의의 값을 넣어도 찾을 수 없도록 예상 불가능 해야한다.
++ 해커가 토큰을 털어가도 시간이 지나면 사용할 수 없도록 서버에서 해당 토큰의 만료시간을 짧게 유지한다.(예 : 30분) 또는 해킹이 의심되는 경우 서버에서 해당 토큰을 강제로 제거하면 된다.
+
+## 세션
+
+출처 - [스프링 MVC 2편 - 백엔드 웹 개발 활용 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)
