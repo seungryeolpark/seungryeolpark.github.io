@@ -1,1 +1,27 @@
+---
+title: 쿠키 세션
+categories: springMVC
+---
 
+## 쿠키
+**쿠키 생성**
+![쿠키1](https://user-images.githubusercontent.com/48073115/130345420-21400058-3832-4658-b98e-fda9c7d6702d.png)
+
+**클라이언트 쿠키 전달1**
+![쿠키2](https://user-images.githubusercontent.com/48073115/130345437-f11a4ee7-237f-4b73-872d-d23a51879d28.png)
+
+**클라이언트 쿠키 전달2**
+![쿠키3](https://user-images.githubusercontent.com/48073115/130345469-60ec5950-c2d2-4a10-885f-6bdc349c6526.png)
+
+**쿠키에는 영속 쿠키와 세션 쿠키가 있다.**
++ 영속 쿠키 : 만료 날짜를 입력하면 해당 날짜까지 유지
++ 세션 쿠키 : 만료 날짜를 생략하면 브라우저 종료시 까지만 유지
+
+### 쿠키 생성 로직
+```java
+Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
+response.addCookie(idCookie);
+```
+
++ 보통 로그인에 성공하면 쿠키를 생성하고 HttpServletResponse 에 담는다.
++ 쿠키 이름은 memberId 이고, 값은 회원의 id 를 담아둔다.
