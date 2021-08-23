@@ -79,3 +79,5 @@ categories: springMVC
   + 해당 필드에 오류가 있는 경우에 태그를 출력한다.(th:if 의 편의 버전이다.)
 + th:errorclass
   + th:field 에서 지정한 필드에 오류가 있으면 class 정보를 추가한다.
+
+출처 - [스프링 MVC 2편 - 백엔드 웹 개발 활용 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)
