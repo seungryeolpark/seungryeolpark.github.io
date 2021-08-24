@@ -17,4 +17,10 @@ categories: springMVC
 
 **2. multipart/form-data**
 
+![파일 업로드2](https://user-images.githubusercontent.com/48073115/130581346-bbde6965-621e-4275-bf8a-6438b3c79a68.png)
 
++ 이 방식을 사용하려면 Form 태그에 별도의 entype="multipart/form-data"를 지정해야 한다.
++ multipart/form-data 방식은 다른 종류의 여러 파일과 폼의 내용 함께 전송할 수 있다.(그래서 이름이 multipart이다.)
++ 폼의 입력 결과로 생성된 HTTP 메시지를 보면 각각의 전송 항목이 구분이 되어있다.
++ Content-Disposition 이라는 항목별 헤더가 추가되어 있고 여기에 부가 정보가 있다.
++ multipart/form-data 는 이렇게 각각의 항목을 구분해서, 한번에 전송하는 것이다.
