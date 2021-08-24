@@ -71,3 +71,5 @@ public String saveFile(@RequestParam String itemName,
 ### MultipartFile 주요 메서드
 + file.getOriginalFilename() : 업로드 파일 명
 + file.transferTo(...) : 파일 저장
+
+출처 - [스프링 MVC 2편 - 백엔드 웹 개발 활용 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)
