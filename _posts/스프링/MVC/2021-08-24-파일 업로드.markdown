@@ -24,3 +24,50 @@ categories: springMVC
 + 폼의 입력 결과로 생성된 HTTP 메시지를 보면 각각의 전송 항목이 구분이 되어있다.
 + Content-Disposition 이라는 항목별 헤더가 추가되어 있고 여기에 부가 정보가 있다.
 + multipart/form-data 는 이렇게 각각의 항목을 구분해서, 한번에 전송하는 것이다.
+
+### application.properties 설정
+```properties
+file.dir=파일 업로드 경로 설정
+```
+```java
+@Value("${file.dir}")
+private String fileDir;
+```
+
++ String fileDir 에 file.dir 값을 넣는다.
+
+```properties
+logging.level.org.apache.coyote.http11=debug
+```
+
++ 이 옵션을 사용하면 HTTP 요청 메시지를 확인할 수 있다.
+
+```properties
+spring.servlet.multipart.max-file-size=1MB
+spring.servlet.multipart.max-request-size=10MB
+```
+
++ 큰 파일을 무제한 업로드하게 둘 수는 없으므로 업로드 사이즈를 제한할 수 있다.
++ 사이즈를 넘으면 예외(SizeLimitExceededException)가 발생한다.
++ max-file-size : 파일 하나의 최대 사이즈, 기본 1MB
++ max-request-size : 멀티파트 요청 하나에 여러 파일을 업로드 할 수 있는데, 그 전체 합. 기본 10MB
+
+```properties
+spring.servlet.multipart.enabled=false (기본 true)
+```
+
++ 이 옵션을 켜면 스프링 부트는 서블릿 컨테이너에게 멀티파트 데이터를 처리하라고 설정한다.
+
+### 스프링 파일 업로드
+```java
+public String saveFile(@RequestParam String itemName,
+    @RequestParam MultipartFile file, HttpServletRequest 
+    request) throws IOException
+```
+
++ @RequestParam MultipartFile file : 업로드하는 HTML Form 의 name 에 맞추어 @RequestParam 을 적용하면 된다.
++ @ModelAttribute 에서도 MultipartFile 을 동일하게 사용할 수 있다.
+
+### MultipartFile 주요 메서드
++ file.getOriginalFilename() : 업로드 파일 명
++ file.transferTo(...) : 파일 저장
