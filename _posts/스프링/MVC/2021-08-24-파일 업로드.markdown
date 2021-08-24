@@ -1,0 +1,20 @@
+---
+title: 파일 업로드
+categories: springMVC
+---
+
+### HTML 폼 전송 방식
+**1. application/x-www-form-urlencoded**
+
+![파일 업로드1](https://user-images.githubusercontent.com/48073115/130570328-2c6494e3-c0ae-407f-a764-96ce9423bc94.png)
+
++ HTML 폼 데이터를 서버로 전송하는 가장 기본적인 방법
+  + Form 태그에 별도의 enctype 옵션이 없으면 웹 브라우저는 요청 HTTP 메시지의 헤더에 다음 내용을 추가한다.
+  + Content-Type: application/x-www-form-urlencoded
+  + 그리고 폼에 입력한 전송할 항목을 HTTP Body에 문자로 username=kim&age=20 와 같이 & 로 구분해서 전송한다.
++ 파일을 업로드 하려면 파일은 문자가 아니라 바이너리 데이터를 전송해야 한다. -> 문자를 전송하는 이 방식으로 파일을 전송하기는 어렵다.
++ 이 문제를 해결하기 위해 HTTP는 multipart/form-data 라는 전송 방식을 제공한다.
+
+**2. multipart/form-data**
+
+
