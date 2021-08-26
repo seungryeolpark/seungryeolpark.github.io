@@ -61,12 +61,12 @@ categories: springSecurity
 
 | 메소드 이름 | 설명 |
 |---|---|
-| getAuthorities() | 사용자의 권한을 콜렉션 형태로 반환  (클래스 자료형은 GrantedAuthority를 구현해야함) |
-| getUsername() | 사용자의 id를 반환  (id는 unique한 값이여야함) |
+| getAuthorities() | 사용자의 권한을 콜렉션 형태로 반환<br> (클래스 자료형은 GrantedAuthority를 구현해야함) |
+| getUsername() | 사용자의 id를 반환<br> (id는 unique한 값이여야함) |
 | getPassword() | 사용자의 password를 반환 |
-| isAccountNonExpired() | 계정 만료 여부 반환  (true = 만료되지 않음을 의미) |
-| isAccountNonLocked() | 계정 잠금 여부 반환  (true = 잠금되지 않음을 의미) |
-| isCredentialsNonExpired() | 패스워드 만료 여부 반환  (true = 만료되지 않음을 의미) |
-| isEnabled() | 계정 사용 가능 여부 반환  (true = 사용 가능을 의미) |
+| isAccountNonExpired() | 계정 만료 여부 반환<br> (true = 만료되지 않음을 의미) |
+| isAccountNonLocked() | 계정 잠금 여부 반환<br> (true = 잠금되지 않음을 의미) |
+| isCredentialsNonExpired() | 패스워드 만료 여부 반환<br> (true = 만료되지 않음을 의미) |
+| isEnabled() | 계정 사용 가능 여부 반환<br> (true = 사용 가능을 의미) |
 
 출처 - [Spring Security로 로그인/회원가입 프로젝트](https://shinsunyoung.tistory.com/78)
