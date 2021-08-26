@@ -60,7 +60,7 @@ categories: springSecurity
 + UserDetails에서 필수로 구현해야 하는 메소드는 아래와 같다.
 
 | 메소드 이름 | 설명 |
-|---|---|
+|:---:|:---:|
 | getAuthorities() | 사용자의 권한을 콜렉션 형태로 반환<br> (클래스 자료형은 GrantedAuthority를 구현해야함) |
 | getUsername() | 사용자의 id를 반환<br> (id는 unique한 값이여야함) |
 | getPassword() | 사용자의 password를 반환 |
