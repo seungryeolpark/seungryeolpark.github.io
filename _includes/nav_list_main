@@ -44,6 +44,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springSecurity" %}
+                        <li><a href="/categories/spring/security" class="">보안 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         <span class="nav__sub-title">취업 준비</span>
             <ul>
                 {% for category in site.categories %}
