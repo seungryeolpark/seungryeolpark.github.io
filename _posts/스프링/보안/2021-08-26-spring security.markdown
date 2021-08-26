@@ -31,5 +31,27 @@ categories: springSecurity
   + HttpServletRequest.html#isUserInRole(java.lang.String)
   + HttpServletRequest.html#login(java.lang.String, java.lang.String)
   + HttpServletRequest.html#logout()
-  
+
+### WebSecurityConfig
+**WebSecurityConfig.java**
+
+![보안1](https://user-images.githubusercontent.com/48073115/130959681-8134f4d3-9573-424f-b127-ede882f6503d.png)
+
++ @EnableWebSecurity : Spring Security 를 활성화한다는 의미의 어노테이션
++ WebSecurityConfigurerAdapter : Spring Security의 설정파일로서의 역할을 하기 위해 상속해야 하는 클래스
++ web.ignoring().antMatchers() : 인증을 무시할 경로들을 설정
++ http.authorizeRequests() : 접근에 대한 인증 설정이 가능하다.
+  + anyMatchers() : 경로 설정과 권한 설정이 가능하다.
+  + anyRequest() : anyMatchers 에서 설정하지 않은 나머지 경로를 의미한다.
+    + permitAll() : 누구나 접근이 가능
+    + hasRole() : 특정 권한이 있는 사람만 접근 가능
+    + authenticated() : 권한의 종류에 상관이 없이 권한이 있으면 접근 가능
++ http.formLogin() : 로그인에 관한 설정이 가능하다.
+  + loginPage() : 로그인 페이지 링크 설정
+  + defaultSuccessUrl() : 로그인 성공 후 리다이렉트할 주소
++ http.logout() : 로그아웃에 관한 설정이 가능하다.
+  + logoutSuccessUrl() : 로그아웃 성공 후 리다이렉트할 주소
+  + invalidateHttpSession() : 로그아웃 이후 세션 전체 삭제 여부
++ auth.userDetailsService() : 로그인할 때 필요한 정보를 가져오는 곳
+  + passwordEncoder() : 패스워드 인코더 설정
   
