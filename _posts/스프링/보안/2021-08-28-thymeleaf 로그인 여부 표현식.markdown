@@ -8,6 +8,19 @@ categories: springSecurity
 ```gradle
 implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
 ```
+
+### 권한별 표현식
+
+**example**
+```thymeleaf
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+  This content is only shown to users.
+</div>
+```
+
 ### Spring Security login 여부 표현식
 
 **example**
@@ -36,3 +49,5 @@ spring security 를 통해 authorization 이 생성되지 않은 상태에서 ex
 ```
 
 위와 같이 선언하면 해결된다.
+
+출처 - [thymeleaf 에서 spring security login 여부를 변수로 사용하기](http://bluesky-devstudy.blogspot.com/2016/09/thymeleaf-spring-security-login.html)
