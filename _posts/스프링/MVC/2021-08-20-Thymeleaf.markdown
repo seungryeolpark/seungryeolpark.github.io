@@ -38,7 +38,10 @@ categories: springMVC
 + If-then : (if) ? (then)
 + If-then-else : (if) ? (then) : (else)
 + Default : (value) ?: (defaultvalue)
-
++ th:if="조건"
+  + if 문으로 조건에 true하면 출력한다.
++ th:unless="조건"
+  + not if 문으로 조건에 false하면 출력한다.
 ### 특별한 토큰
 + No-Operation : _
 
@@ -72,7 +75,6 @@ categories: springMVC
 
 + #{...}
   + 스프링의 메시지를 편리하게 조회한다.
-
 + #fields
   + #field 로 BindingResult 가 제공하는 검증 오류에 접근할 수 있다.
 + th:errors
