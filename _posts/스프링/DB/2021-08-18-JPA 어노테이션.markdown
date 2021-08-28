@@ -22,6 +22,63 @@ categories: springDB
 ### @Autowired
 + 생성자 Injection 많이 사용, 생성자가 하나면 생략 가능
 
+## @OneToMany @ManyToOne
++ 테이블은 외래키 하나로 두 테이블이 연관관계를 맺음
++ 둘 중 테이블의 외래키를 관리하는 곳을 지정해야함
++ 연관관계의 주인 : 외래키를 관리하는 참조
++ 주인의 반대편 : 외래키에 영향을 주지 않음
+
+### 다대일 단방향
++ N에서 1을 참조한다.
++ 외래키가 있는 곳에 참조를 걸고 연관관계 매핑을 한다.
++ N에 외래키가 있어야 한다.
++ 가장 많이 사용한다.
+**example**
+```java
+@Entity
+@Getter
+@Setter
+public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_ID")
+    private Long id;
+
+    @Column(name = "USERNAME")
+    private String username;
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID") // 외래키
+    private Team team;
+
+}
+```
+
+```java
+@Entity
+@Getter
+@Setter
+public class Team {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_ID")
+    private Long id;
+    private String name;
+}
+```
+
+### 다대일 양방향
++ N 에서 1을 참조하고 1에서도 N을 참조한다.
++ 연관관계 주인이 외래키 관리한다.
++ **mapperdBy**로 연관관계의 주인을 읽을 것이라는 것 명시가 중요하다.
++ 양쪽을 서로 참조하도록 개발
+
+```java
+// Team 클래스
+    @OneToMany(mappedBy = "team") //참조를 당하는 쪽에서 읽기만 가능! 
+    private List<Member> members = new ArrayList<>();
+```
+
 ## 테스트 어노테이션
 
 ### @RunWith(SpringRunner.class)
