@@ -82,3 +82,7 @@ System.out.println(member.getOrders().getClass());
 class java.util.ArrayList
 class org.hibernate.collection.internal.PersistentBag
 ```
+
+### 8. Test @Transactional
++ Test 에서 @Transactional 은 실행후 백업하기에 테이블에 데이터가 안남는다.
++ 데이터가 남길 원할경우 @Commit 어노테이션을 추가해야한다.
