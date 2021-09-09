@@ -1,0 +1,17 @@
+---
+title: Querydsl
+categories: springDB
+---
+
++ Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.
++ Querydsl 에는 apt, jpa 가 있다.
+  + apt
+    + apt 는 Annotation Processing Tool 의 약자이고 Annotation 이 있는 기존코드를 바탕으로 새로운 코드와 새로운 파일들을 만든다.
+    + Querydsl 에서 'Q' 가 붙는 클래스들을 자동 생성한다.
+  + jpa
+    + jpa 는 Java Persistence API의 약자이고 자바 진영의 ORM 기술 표준으로, 인터페이스의 모음이다.
+    + jpa 는 애플리케이션과 JDBC 사이에서 동작한다. (JPA 내부에서 JDBC API 를 사용하여 SQL 를 호출하여 DB 와 통신한다.)
+  
+
++ 최신버전에선 JPAQueryFactory 를 쓰도록 권장한다.
+  + ex) JPAQueryFactory query = new JPAQueryFactory(em);
