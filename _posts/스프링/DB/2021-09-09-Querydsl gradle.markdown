@@ -39,10 +39,10 @@ compileQuerydsl {
 ```
 
 ### Querydsl 환결설정 검증
-+ **Gradle Intellij 사용법
++ **Gradle Intellij 사용법**
   + Gradle -> Tasks -> build -> clean
   + Gradle -> Tasks -> other -> compileQuerydsl
-+ **Gradle 콘솔 사용법
++ **Gradle 콘솔 사용법**
   + ./gradlew clean compileQuerydsl
 + **Q 타입 생성 확인**
   + project에서 build -> generated -> querydsl
