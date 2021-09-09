@@ -13,12 +13,6 @@ plugins {
 dependencies {
   //querydsl 추가
  implementation 'com.querydsl:querydsl-jpa'
- compileOnly 'org.projectlombok:lombok'
- runtimeOnly 'com.h2database:h2'
- annotationProcessor 'org.projectlombok:lombok'
- testImplementation('org.springframework.boot:spring-boot-starter-test') {
- exclude group: ‘org.junit.vintage’, module: ‘junit-vintage-engine'
- }
 }
 
 //querydsl 추가
@@ -50,7 +44,8 @@ compileQuerydsl {
 
 ### 참고
 + Q타입은 컴파일 시점에 자동 생성되므로 버전관리(GIT)에 포함하지 않는 것이 좋다.
-+ 앞서 설정에서 **생성 위치를 gradle build 폴더 아래 생성**되도록 했기 때문에 이 부분도 자연스럽게 해결된다. 
++ 앞서 설정에서 **생성 위치를 gradle build 폴더 아래 생성**되도록 했기 때문에 이 부분도 자연스럽게 해결된다.
+  + ex) def querydslDir = "$buildDir/generated/querydsl"
 + 대부분 gradle build 폴더를 git에 포함하지 않는다.
 
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
