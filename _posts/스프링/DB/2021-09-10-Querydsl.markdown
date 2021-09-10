@@ -3,6 +3,7 @@ title: Querydsl
 categories: springDB
 ---
 
+## Querydsl
 + Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.
 + Querydsl 에는 apt, jpa 가 있다.
   + apt
@@ -15,3 +16,40 @@ categories: springDB
 
 + 최신버전에선 JPAQueryFactory 를 쓰도록 권장한다.
   + ex) JPAQueryFactory query = new JPAQueryFactory(em);
+
+## Querydsl vs JPQL
+```java
+@Test
+public void startJPQL() {
+   //member1을 찾아라.
+   String qlString =
+   "select m from Member m " +
+   "where m.username = :username";
+   Member findMember = em.createQuery(qlString, Member.class)
+   .setParameter("username", "member1")
+   .getSingleResult();
+   assertThat(findMember.getUsername()).isEqualTo("member1");
+}
+@Test
+public void startQuerydsl() {
+   //member1을 찾아라.
+   JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+   QMember m = new QMember("m");
+   Member findMember = queryFactory
+   .select(m)
+   .from(m)
+   .where(m.username.eq("member1"))//파라미터 바인딩 처리
+   .fetchOne();
+   assertThat(findMember.getUsername()).isEqualTo("member1");
+}
+```
++ EntityManager 로 JPAQueryFactory 생성
++ Querydsl 은 JPQL 빌더
++ JPQL : 문자(런타임 오류), Querydsl : 코드(컴파일 시점 오류)
++ JPQL : 파라미터 바인딩 직접 입력, Querydsl : 파라미터 바인딩 자동 처리
+
+### JPAQueryFactory 필드에서 동시성 문제
++ 동시성 문제는 JPAQueryFactory 를 생성할 때 제공하는 EntityManager(em) 에 달려있다.
++ 스프링 프레임워크는 여러 쓰레드에서 동시에 같은 EntityManager에 접근해도, 트랜잭션 마다 별도의 영속성 컨텍스트를 제공하기 때문에, 동시성 문제는 걱정하지 않아도 된다.
+
+출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
