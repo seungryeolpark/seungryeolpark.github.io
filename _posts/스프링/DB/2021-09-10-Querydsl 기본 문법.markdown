@@ -14,7 +14,7 @@ categories: springDB
 + [집합](#집합)
 + [조인](#조인)
 + [서브 쿼리](#서브-쿼리)
-+ [상수, 문자 더하기](#상수,-문자-더하기)
++ [상수 문자 더하기](#상수-문자-더하기)
 
 ## Querydsl
 + Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.
@@ -448,7 +448,7 @@ List<Tuple> fetch = queryFactory
 2. 애플리케이션에서 쿼리를 2번 분리해서 실행한다.
 3. nativeSQL을 사용한다.
 
-## 상수, 문자 더하기
+## 상수 문자 더하기
 상수가 필요하면 Expressions.constant(xxx) 사용
 ```java
 Tuple result = queryFactory
