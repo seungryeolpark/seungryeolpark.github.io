@@ -356,4 +356,27 @@ t=[Member(id=8, username=teamB, age=0), Team(id=2, name=teamB)]
 + 일반조인 : leftJoin(member.team, team)
 + on조인 : from(member).leftJoin(team).on(xxx)
 
+### 조인 패치 조인
++ SQL 조인을 활용해서 연관된 엔티티를 SQL 한번에 조회하는 기능
++ 주로 성능 최적화에 사용하는 방법
++ 페치 조인 미적용 : 지연로딩으로 SQL 쿼리 각각 실행
++ 페치 조인 적용 : 즉시로딩으로 SQL 쿼리 조인으로 한번에 조회
+
+```java
+@Test
+public void fetchJoinUse() throws Exception {
+     em.flush();
+     em.clear();
+     Member findMember = queryFactory
+         .selectFrom(member)
+         .join(member.team, team).fetchJoin()
+         .where(member.username.eq("member1"))
+         .fetchOne();
+     boolean loaded =
+    emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
+     assertThat(loaded).as("페치 조인 적용").isTrue();
+}
+```
++ join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 추가
+
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
