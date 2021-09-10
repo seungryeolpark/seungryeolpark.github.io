@@ -3,7 +3,8 @@ title: Querydsl
 categories: springDB
 ---
 
-**목차**
+## 목차
+### Querydsl 기본 문법
 + [Querydsl](#Querydsl)
 + [Querydsl vs JPQL](#Querydsl-vs-JPQL)
 + [기본 Q-Type 활용](#기본-Q-Type-활용)
