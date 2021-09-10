@@ -302,6 +302,58 @@ public void theta_join() throws Exception {
 }
 ```
 + from 절에 여러 엔티티를 선택해서 세타 조인
-+ 외부 조인 불가능
+
+### 조인 on 절
+**조인 대상 필터링**
+```java
+@Test
+public void join_on_filtering() throws Exception {
+     List<Tuple> result = queryFactory
+         .select(member, team)
+         .from(member)
+         .leftJoin(member.team, team).on(team.name.eq("teamA"))
+         .fetch();
+     for (Tuple tuple : result) {
+     System.out.println("tuple = " + tuple);
+     }
+}
+```
+**결과**
+```java
+t=[Member(id=3, username=member1, age=10), Team(id=1, name=teamA)]
+t=[Member(id=4, username=member2, age=20), Team(id=1, name=teamA)]
+t=[Member(id=5, username=member3, age=30), null]
+t=[Member(id=6, username=member4, age=40), null]
+```
++ on 절을 활용해 조인 대상을 필터링 할 때, 외부조인이 아니라 내부조인을 사용하면, where 절에서 필터링 하는 것과 기능이 동일하다.
++ on 절을 활용한 조인 대상 필터링을 사용할 때, 내부조인이면 익숙한 where 절로 해결하고, 정말 외부조인이 필요한 경우에만 이 기능을 사용하자.
+
+**연관관계 없는 엔티티 외부 조인**
+```java
+@Test
+public void join_on_no_relation() throws Exception {
+     em.persist(new Member("teamA"));
+     em.persist(new Member("teamB"));
+     List<Tuple> result = queryFactory
+         .select(member, team)
+         .from(member)
+         .leftJoin(team).on(member.username.eq(team.name))
+         .fetch();
+     for (Tuple tuple : result) {
+     System.out.println("t=" + tuple);
+     }
+}
+```
+**결과**
+```java
+t=[Member(id=3, username=member1, age=10), null]
+t=[Member(id=4, username=member2, age=20), null]
+t=[Member(id=5, username=member3, age=30), null]
+t=[Member(id=6, username=member4, age=40), null]
+t=[Member(id=7, username=teamA, age=0), Team(id=1, name=teamA)]
+t=[Member(id=8, username=teamB, age=0), Team(id=2, name=teamB)]
+```
++ 일반조인 : leftJoin(member.team, team)
++ on조인 : from(member).leftJoin(team).on(xxx)
 
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
