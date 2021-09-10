@@ -1,10 +1,9 @@
 ---
-title: Querydsl
+title: Querydsl 기본 문법
 categories: springDB
 ---
 
 ## 목차
-### Querydsl 기본 문법
 + [Querydsl](#Querydsl)
 + [Querydsl vs JPQL](#Querydsl-vs-JPQL)
 + [기본 Q-Type 활용](#기본-Q-Type-활용)
@@ -14,6 +13,7 @@ categories: springDB
 + [페이징](#페이징)
 + [집합](#집합)
 + [조인](#조인)
++ [서브 쿼리](#서브-쿼리)
 
 ## Querydsl
 + Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.
@@ -313,6 +313,7 @@ public void join_on_filtering() throws Exception {
          .from(member)
          .leftJoin(member.team, team).on(team.name.eq("teamA"))
          .fetch();
+         
      for (Tuple tuple : result) {
      System.out.println("tuple = " + tuple);
      }
@@ -339,6 +340,7 @@ public void join_on_no_relation() throws Exception {
          .from(member)
          .leftJoin(team).on(member.username.eq(team.name))
          .fetch();
+         
      for (Tuple tuple : result) {
      System.out.println("t=" + tuple);
      }
@@ -372,11 +374,77 @@ public void fetchJoinUse() throws Exception {
          .join(member.team, team).fetchJoin()
          .where(member.username.eq("member1"))
          .fetchOne();
+         
      boolean loaded =
     emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
      assertThat(loaded).as("페치 조인 적용").isTrue();
 }
 ```
 + join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 추가
+
+## 서브 쿼리
+com.querydsl.jpa.JPAExpressions 사용
+### 서브 쿼리 eq 사용
+```java
+@Test
+public void subQuery() throws Exception {
+     QMember memberSub = new QMember("memberSub");
+     List<Member> result = queryFactory
+         .selectFrom(member)
+         .where(member.age.eq(
+         JPAExpressions
+             .select(memberSub.age.max())
+             .from(memberSub)
+     ))
+     .fetch();
+     
+     assertThat(result).extracting("age")
+     .containsExactly(40);
+}
+```
+### 서브쿼리 여러건 처리 in 사용
+```java
+@Test
+public void subQueryIn() throws Exception {
+     QMember memberSub = new QMember("memberSub");
+     List<Member> result = queryFactory
+         .selectFrom(member)
+         .where(member.age.in(
+         JPAExpressions
+             .select(memberSub.age)
+             .from(memberSub)
+             .where(memberSub.age.gt(10))
+     ))
+     .fetch();
+     
+     assertThat(result).extracting("age")
+     .containsExactly(20, 30, 40);
+}
+```
+### select 절에 subquery
+```java
+List<Tuple> fetch = queryFactory
+     .select(member.username,
+     JPAExpressions
+         .select(memberSub.age.avg())
+         .from(memberSub)
+     ).from(member)
+     .fetch();
+     
+    for (Tuple tuple : fetch) {
+         System.out.println("username = " + tuple.get(member.username));
+         System.out.println("age = " +
+        tuple.get(JPAExpressions.select(memberSub.age.avg())
+         .from(memberSub)));
+}
+```
+### from 절의 서브쿼리 한계
++ JPA JPQL는 from 절의 서브쿼리는 지원하지 않는다. 당연히 Querydsl 도 지원하지 않는다.
++ 하이버네이트 구현체를 사용하면 select 절의 서브쿼리는 지원한다. Querydsl 도 하이버네이트 구현체를 사용하면 select 절의 서브쿼리를 지원한다.
+
+### from 절의 서브쿼리 해결방안
+1. 서브쿼리를 join으로 변경한다.
+2. 애플리케이션에서 쿼리를 2번 분리해서 실행한다.
+3. nativeSQL을 사용한다.
 
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
