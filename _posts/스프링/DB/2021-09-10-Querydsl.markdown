@@ -130,7 +130,7 @@ public void searchAndParam() {
    List<Member> result1 = queryFactory
    .selectFrom(member)
    .where(member.username.eq("member1"),
-   member.age.eq(10))
+          member.age.eq(10))
    .fetch();
    assertThat(result1.size()).isEqualTo(1);
 }
