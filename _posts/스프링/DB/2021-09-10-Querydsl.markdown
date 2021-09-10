@@ -248,7 +248,7 @@ public void group() throws Exception {
      assertThat(teamB.get(team.name)).isEqualTo("teamB");
      assertThat(teamB.get(member.age.avg())).isEqualTo(35);
 }
-
+```
 + groupBy 그룹화된 결과를 제한하려면 having
 + **groupBy(), having() 예시**
 ```java
