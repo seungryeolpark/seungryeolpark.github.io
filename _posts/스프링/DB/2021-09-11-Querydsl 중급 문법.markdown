@@ -5,6 +5,7 @@ categories: springDB
 
 **목차**
 + [프로젝션과 결과 반환](#프로젝션과-결과-반환)
++ [동적 쿼리](#동적-쿼리)
 
 ## 프로젝션과 결과 반환
 ### 기본
@@ -74,4 +75,38 @@ List<UserDto> fetch = queryFactory
 + ExpressionUtils.as(source, alias) : 필드나 서브 쿼리에 별칭 적용
 + username.as("memberName") : 필드에 별칭 적용
 
+### @QueryProjection
+```java
+@Data
+public class MemberDto {
+     private String username;
+     private int age;
+     
+     public MemberDto() {
+     }
+     
+     @QueryProjection
+     public MemberDto(String username, int age) {
+         this.username = username;
+         this.age = age;
+     }
+}
+```
++ gradle -> other -> compileQuerydsl
++ QMemberDto 생성 확인
+
+**@QueryProjection 활용**
+```java
+List<MemberDto> result = queryFactory
+     .select(new QMemberDto(member.username, member.age))
+     .from(member)
+     .fetch();
+```
++ DTO 조회에서 생성자 방식과의 차이점
+  + DTO 생성자 사용 : 잘못된 코드라도 런타임 에러가 난다.
+  + @QueryProjection 사용 : 잘못된 코드라도 컴파일 에러가 난다.
++ 컴파일로 타입을 체크할 수 있는 가장 안전한 방법
++ DTO 에 QueryDSL 어노테이션을 유지해야 하는 점과 DTO 까지 Q 파일을 생성해야 하는 단점이 있다.(의존성 문제)
+
+## 동적 쿼리
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30137?tab=note)
