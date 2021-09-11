@@ -17,7 +17,7 @@ categories: springDB
 + [상수 문자 더하기](#상수-문자-더하기)
 
 ## Querydsl
-+ Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.
++ Querydsl 는 Query를 자바코드로 만들 수 있게 해준다.(문법 오류를 컴파일 오류로 바꾼다.)
 + Querydsl 에는 apt, jpa 가 있다.
   + apt
     + apt 는 Annotation Processing Tool 의 약자이고 Annotation 이 있는 기존코드를 바탕으로 새로운 코드와 새로운 파일들을 만든다.
