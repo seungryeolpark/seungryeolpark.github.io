@@ -157,4 +157,31 @@ private BooleanExpression allEq(String usernameCond, Integer ageCond) {
 ```
 + null 체크는 주의해서 처리해야 한다.
 
+## 수정 삭제 벌크 연산
+### 쿼리 한번으로 대량 데이터 수정
+```java
+long count = queryFactory
+     .update(member)
+     .set(member.username, "비회원")
+     .where(member.age.lt(28))
+     .execute();
+```
+### 기존 숫자에 1 더하기
+```java
+long count = queryFactory
+     .update(member)
+     .set(member.age, member.age.add(1)) // 곱하기 : multiply(x)
+     .execute();
+```
+### 쿼리 한번으로 대량 데이터 삭제
+```java
+long count = queryFactory
+     .delete(member)
+     .where(member.age.gt(18))
+     .execute();
+```
+### 주의
++ query 를 실행해도 DB에 반영되고 영속성 컨텍스트는 반영이 안된다.
++ 배치 쿼리를 실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
+
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30137?tab=note)
