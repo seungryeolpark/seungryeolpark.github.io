@@ -148,7 +148,7 @@ private BooleanExpression ageEq(Integer ageCond) {
 }
 ```
 + where 조건에 null 값은 무시된다.
-+ 메서드를 다른 쿼리에서도 재활용 할 수 있다.
++ 메서드를 다른 쿼리에서도 **재활용** 할 수 있다.
 + 쿼리 자체의 가독성이 높아진다.
 + **조합 가능**하다
 
