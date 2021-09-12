@@ -8,6 +8,7 @@ categories: springDB
 + [동적 쿼리](#동적-쿼리)
 + [수정 삭제 벌크 연산](#수정-삭제-벌크-연산)
 + [SQL function 호출하기](#SQL-function-호출하기)
++ [local test 분리](#local-test-분리)
 
 ## 프로젝션과 결과 반환
 ### 기본
