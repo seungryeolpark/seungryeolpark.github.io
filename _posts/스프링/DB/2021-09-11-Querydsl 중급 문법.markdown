@@ -202,4 +202,55 @@ String result = queryFactory
 .where(member.username.eq(member.username.lower()))
 ```
 
+## local test 분리
+### 프로파일 설정
+src/main/resorces/application.yml
+```yml
+spring:
+ profiles:
+   active: local
+```
+src/test/resource/application.yml
+```yml
+spring:
+ profiles:
+  active: test
+```
+
+### 샘플 데이터 추가
+```java
+@Profile("local")
+@Component
+@RequiredArgsConstructor
+public class InitMember {
+
+   private final InitMemberService initMemberService;
+
+   @PostConstruct
+   public void init() {
+      initMemberService.init();
+   }
+   
+   @Component
+   static class InitMemberService {
+   
+       @PersistenceContext
+       EntityManager em;
+
+       @Transactional
+       public void init() {
+           Team teamA = new Team("teamA");
+           Team teamB = new Team("teamB");
+           em.persist(teamA);
+           em.persist(teamB);
+
+           for (int i = 0; i < 100; i++) {
+               Team selectedTeam = i % 2 == 0 ? teamA : teamB;
+               em.persist(new Member("member" + i, i, selectedTeam));
+           }
+       }
+   }
+}
+```
+
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30137?tab=note)
