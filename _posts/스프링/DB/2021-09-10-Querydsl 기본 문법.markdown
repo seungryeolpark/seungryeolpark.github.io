@@ -25,10 +25,43 @@ categories: springDB
   + jpa
     + jpa 는 Java Persistence API의 약자이고 자바 진영의 ORM 기술 표준으로, 인터페이스의 모음이다.
     + jpa 는 애플리케이션과 JDBC 사이에서 동작한다. (JPA 내부에서 JDBC API 를 사용하여 SQL 를 호출하여 DB 와 통신한다.)
-  
-
 + 최신버전에선 JPAQueryFactory 를 쓰도록 권장한다.
   + ex) JPAQueryFactory query = new JPAQueryFactory(em);
+
+### 생성자 방식
+1.
+```java
+@Repository
+public class MemberJpaRepository {
+     private final EntityManager em;
+     private final JPAQueryFactory queryFactory;
+     public MemberJpaRepository(EntityManager em) {
+         this.em = em;
+         this.queryFactory = new JPAQueryFactory(em);
+ }
+}
+```
+2. 
+JPAQueryFactory 스프링 빈 등록
+```java
+@Bean
+JPAQueryFactory jpaQueryFactory(EntityManager em) {
+return new JPAQueryFactory(em);
+}
+```
+```java
+@Repository
+@RequiredArgsConstructor
+public class MemberJpaRepository {
+    private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
+}
+```
+
+### 참고
++ 동시성 문제는 걱정하지 않아도 된다.
++ 여기서 스프링이 주입해주는 엔티티 매니저는 실제 동작 시점에 진짜 엔티티 매니저를 찾아주는 프록시용 가짜 엔티티 매니저이다.
++ 가짜 엔티티 매니저는 실제 사용 시점에 트랜잭션 단위로 실제 엔티티 매니저(영속성 컨텍스트)를 할당해준다.
 
 ## Querydsl vs JPQL
 ```java
