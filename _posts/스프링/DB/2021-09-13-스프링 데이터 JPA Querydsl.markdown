@@ -69,5 +69,8 @@ return PageableExecutionUtils
     + 페이지 시작이면서 컨텐츠 사이즈가 페이지 사이즈보다 작을 때
     + 마지막 페이지 일 때 (offset + 컨텐츠 사이즈를 더해서 전체 사이즈 구함)
 
+**참고**
++ PageableExecutionUtils.getPage 는 마지막 인자로 함수를 전달하는데 내부 동작에 의해서 토탈카운트가 페이지 사이즈 보다 적거나, 마지막 페이지일 경우 해당 함수를 실행하지 않는다.
+
 
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84)
