@@ -6,6 +6,7 @@ categories: springDB
 **목차**
 + [사용자 정의 리포지토리](#사용자-정의-리포지토리)
 + [스프링 데이터 페이징 활용](#스프링-데이터-페이징-활용)
++ [컨트롤러에서 Pageable 파라미터로 받기](#컨트롤러에서-Pageable-파라미터로-받기)
 
 
 ## 사용자 정의 리포지토리
@@ -72,5 +73,35 @@ return PageableExecutionUtils
 **참고**
 + PageableExecutionUtils.getPage 는 마지막 인자로 함수를 전달하는데 내부 동작에 의해서 토탈카운트가 페이지 사이즈 보다 적거나, 마지막 페이지일 경우 해당 함수를 실행하지 않는다.
 
+### 컨트롤러에서 Pageable 파라미터로 받기
+#### 요청 파라미터
+```java
+/members?page=0&size=10&sort=id,desc&sort=username,desc
+```
+#### 설정
+**글로벌 설정 : 스프링 부트**
+```java
+spring.data.web.pageable.default-page-size=20 //기본 페이지 사이즈
+spring.data.web.pageable.max-page-size=2000 //최대 페이지 사이즈
+```
+
+**개별 설정 : @PageableDefault 어노테이션 사용**
+```java
+public String list(
+        @PageableDefault(size = 12, sort = "username", direction = Sort.Direction.DESC) Pageable pageable) {
+                ...
+```
+
+**페이지 파라미터가 2개 이상일 경우**
+```java
+/members?member_page=0&order_page=1
+```
+```java
+public String list(
+        @Qualifier("member") Pageable memberPageable,
+        @Qualifier("order") Pageable orderPageable, ...) {
+                ...
+```
 
 출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84)
+출처 - [스프링데이터 JPA - 컨트롤러에서 Pageable 파라미터로 받아 페이징하기](https://yoonbing9.tistory.com/38)
