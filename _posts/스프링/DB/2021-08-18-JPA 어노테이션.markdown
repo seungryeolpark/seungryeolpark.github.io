@@ -4,13 +4,13 @@ categories: springDB
 ---
 
 **목차**
-+ [@Id](#@Id)
-+ [@GeneratedValue](#@GeneratedValue)
++ [@Id](#Id)
++ [@GeneratedValue](#GeneratedValue)
 + [기본 키 매핑 전략](#기본-키-매핑-전략)
-+ [@PersistenceContext](#@PersistenceContext)
-+ [@Transactional](#@Transactional)
++ [@PersistenceContext](#PersistenceContext)
++ [@Transactional](#Transactional)
 + [@Autowired](#Autowired)
-+ [@OneToMany @ManyToOne](#@OneToMany-@ManyToOne)
++ [@OneToMany @ManyToOne](#OneToMany-@ManyToOne)
 
 ### @Id
 + 해당 프로퍼티가 테이블의 주키(primary Key) 역할을 한다는 것을 나타낸다.
