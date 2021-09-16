@@ -9,7 +9,7 @@ categories: springDB
 + [기본 키 매핑 전략](#기본-키-매핑-전략)
 + [@PersistenceContext](#@PersistenceContext)
 + [@Transactional](#@Transactional)
-+ [@Autowired](#@Autowired)
++ [@Autowired](#Autowired)
 + [@OneToMany @ManyToOne](#@OneToMany-@ManyToOne)
 
 ### @Id
