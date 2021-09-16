@@ -3,11 +3,92 @@ title: JPA 어노테이션
 categories: springDB
 ---
 
+**목차**
++ [@Id](#@Id)
++ [@GeneratedValue](#@GeneratedValue)
++ [기본 키 매핑 전략](#기본-키-매핑-전략)
++ [@PersistenceContext](#@PersistenceContext)
++ [@Transactional](#@Transactional)
++ [@Autowired](#@Autowired)
++ [@OneToMany @ManyToOne](#@OneToMany-@ManyToOne)
+
 ### @Id
 + 해당 프로퍼티가 테이블의 주키(primary Key) 역할을 한다는 것을 나타낸다.
 
 ### @GeneratedValue
 + 주키(primary Key)의 값을 위한 자동 생성 전략을 명시하는데 사용한다.
+
+### 기본 키 매핑 전략
+1. 직접 할당 : 기본 키를 애플리케이션에서 직접 엔티티클래스의 @id 필드에 set 해준다.
+2. 자동 생성 : 대리 키 사용 방식
+  + IDENTITY : 기본 키 생성을 데이터베이스에 위임한다.
+  + SEQUENCE : 데이터베이스 시퀀스를 사용해서 기본 키를 할당한다.
+  + TABLE : 키 생성 테이블을 사용한다.
+
+**IDENTITY**
+```java
+@Id
+@GeneratedValue(strategy=GenerationType.IDENTITY)
+private Long id;
+```
++ 주로 MySQL, PostgreSQL, SQL Server, DB2 에서 사용한다.
++ 데이터베이스에 값을 저장하고 나서야 기본 키 값을 구할 수 있다.(단점)
++ 영속성 컨텍스트에 1차 캐시(엔티티의 영속상태화)를 하기 위해서는 구분자로 기본키 필드를 이용한다.
++ 즉 영속성 컨텍스트에 캐싱을 하기 위한 primary key 값을 가져오기 위하여 테이블을 추가로 조회하게 된다.
+
+**SEQUENCE**
+```java
+@SequenceGenerator(
+    name="BOARD_SEQ_GENERATOR",
+    sequenceName="BOARD_SEQ",
+    initialValue=1, allocationsSize=1
+}
+...
+@Id
+@GeneratedValue(strategy=GenerationType.SEQUENCE,
+    generator="BOARD_SEQ_GENERATOR")
+private Long id;
+```
++ 주로 Oracle, PostgreSQL, DB2, H2 등의 데이터베이스에서 사용한다.
++ @SequenceGenerator 은 시퀀스생성기 어노테이션이다.
+  + name 은 실제 @Id 필드에서 참조할 이름이다.
+  + sequenceName 은 실제 데이터베이스에 생성되는 시퀀스 오브젝트 이름이다.
+  + initialValue 은 시퀀스 초기값이다.
+  + allocationSize 는 실제 데이터베이스에서 가져오는 시퀀스의 한번 호출에 증가하는 값의 크기이다.
++ SEQUENCE 전략 순서
+    1. em.persist() 를 호출할 때 먼저 데이터베이스 시퀀스를 사용해서 식별자를 조회한다.(실제 엔티티에 할당할 primary key값)
+    2. 조회한 식별자를 엔티티에 할당한 후에 엔티티를 영속성 컨텍스트에 저장한다.
+    3. 이후 커밋이 일어나게 되면 실제 데이터베이스에 INSERT 되게 한다.
+
+**TABLE**
++ 키 생성 전용 테이블을 하나 만들고 여기에 이름과 값으로 사용할 컬럼을 만들어 데이터베이스 시퀀스를 흉내내는 전략이다.
++ 이것은 벤더에 의존적이지 않은 전략이다.
++ 프로덕환경에서의 데이터베이스 설계에서 꼭 시퀀스 테이블에 생성이 선행되어야 한다.
+
+```java
+/*
+* sequence table
+* CREATE TABLE MY_SEQUENCE(
+*   sequence_name varchar2(255) PRIMARY KEY,
+*   next_val number(22, 0)
+* )
+*/
+@Id
+@GeneratedValue(strategy=GenerationType.TABLE,
+    generator="MEMBER_SEQ_GENERATOR")
+@TableGenerator(
+    name="MEMBER_SEQ_GENERATOR",
+    table="MY_SEQUENCE", //시퀀스 생성용 테이블 이름
+    pkColumnName="sequence_name", //MY_SEQUENCE 테이블에 생성할 필드이름(시퀀스 네임)
+    pkColumnValue="MEMBER_SEQ, //SEQ_NAME이라고 지은 칼럼명에 들어가는 값.(키로 사용할 값)
+    allocationSize=50
+)
+```
+
+**allocationSize 를 이용한 성능 최적화**
++ allocationSize 값을 적절히 크기를 키워 설정한 값만큼 한 번에 시퀀스 값을 증가시키고 나서 그만큼 메모리에서 기억해 시퀀스 값 자체를 메모리에서 할당하는 것이다.
++ ex) allocationSize 값이 50이면 시퀀스를 한번 가져올때 마다 한번에 50씩 증가된 값을 받아온다. 그 말은 처음 시퀀스 값(50)을 받아오면 1~50 까지는 메모리에서 엔티티에 식별자를 할당한다. 그리고 51이 되면 시퀀스 값(100)을 한번 더 가져와 51~100까지 메모리에서 다시 할당해준다. 쉽게 말해 allocationSize=1 일 때보다 시퀀스 값을 가져오기 위해 데이터베이스에 엑세스하는 횟수를 49번 줄인 것이다.
++ insert 성능이 크게 중요하지 않은 애플리케이션은 상관없지만 그 반대는 이 성능 최적화 전략을 사용해보는 것도 좋은 방안이다.
 
 ### @PersistenceContext
 + 엔티티 메니저(EntityManager) 주입
@@ -87,3 +168,5 @@ public class Team {
 
 ### @SpringBootTest
 + 스프링 부트 띄우고 테스트(이게 없으면 @Autowired 다 실패)
+
+출처 - [JPA - 기본 키 매핑 전략(@Id)](https://xzio.tistory.com/1446)
