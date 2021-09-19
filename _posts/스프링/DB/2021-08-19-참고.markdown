@@ -103,4 +103,8 @@ implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
 
 ### 10. lombok @ToString
 + @ToString 어노테이션을 쓸 경우 연관관계 field 를 넣지 말아야한다.
+
+### 11. PUT, PATCH
++ PUT 은 전체 업데이트를 할 때 사용하는 것이 맞다.
++ 부분 업데이트를 하려면 PATCH 를 사용하거나 POST 를 사용하는 것이 REST 스타일에 맞다.
 + 연관관계를 넣으면 무한순환으로 에러가 발생한다.
