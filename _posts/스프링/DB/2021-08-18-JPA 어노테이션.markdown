@@ -8,6 +8,8 @@ categories: springDB
 + [@GeneratedValue](#GeneratedValue)
 + [기본 키 매핑 전략](#기본-키-매핑-전략)
 + [@Repository](#Repository)
++ [@Service](#Service)
++ [@Controller](#Controller)
 + [@PersistenceContext](#PersistenceContext)
 + [@PersistenceUnit](#PersistenceUnit)
 + [@Transactional](#Transactional)
@@ -94,7 +96,14 @@ private Long id;
 + insert 성능이 크게 중요하지 않은 애플리케이션은 상관없지만 그 반대는 이 성능 최적화 전략을 사용해보는 것도 좋은 방안이다.
 
 ### @Repository
++ DB 나 파일 같은 외부 I/O 작업을 처리함
 + 스프링 빈으로 등록, JPA 예외를 스프링 기반 예외 변환
+
+### @Service
++ 내부에서 자바 로직을 처리함
+
+### @Controller
++ 웹 요청과 응답을 처리함
 
 ### @PersistenceContext
 + 엔티티 메니저(EntityManager) 주입
