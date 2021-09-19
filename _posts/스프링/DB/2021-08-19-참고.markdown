@@ -11,7 +11,7 @@ categories: springDB
 + [6. 엔티티는 가급적 Setter 를 사용하지 말자](#6-엔티티는-가급적-Setter-를-사용하지-말자)
 + [7. 컬렉션은 필드에서 초기화 하자](#7-컬렉션은-필드에서-초기화-하자)
 + [8. Test, @Transactional](#8-Test-Transactional)
-+ [9. Spring jpa query 로그에서 value (?) 값이 궁금할 경우](#9-Spring-jpa-query-로그에서-value-(?)-값이-궁금할-경우)
++ [9. Spring jpa query 로그에서 value (?) 값이 궁금할 경우](#9-Spring-jpa-query-로그에서-value--값이-궁금할-경우)
 + [10. lombok @ToString](#10-lombok-ToString)
 + [11. PUT, PATCH](#11-PUT-PATCH)
 
