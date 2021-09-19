@@ -3,10 +3,17 @@ title: 참고
 categories: springDB
 ---
 **목차**
-+ [유니크 제약 조건](#1-유니크-제약-조건)
-+ [스프링 필드 주입 대신에 생성자 주입을 사용하자](#2-스프링-필드-주입-대신에-생성자-주입을-사용하자.)
-+ [HashMap, ConcurrentHashMap](#3-HashMap-ConcurrentHashMap)
-+ [실무에서는 @ManyToMany 를 사용하지 말자](#4-실무에서는-ManyToMany-를-사용하지-말자)
++ [1. 유니크 제약 조건](#1-유니크-제약-조건)
++ [2. 스프링 필드 주입 대신에 생성자 주입을 사용하자](#2-스프링-필드-주입-대신에-생성자-주입을-사용하자.)
++ [3. HashMap, ConcurrentHashMap](#3-HashMap-ConcurrentHashMap)
++ [4. 실무에서는 @ManyToMany 를 사용하지 말자](#4-실무에서는-ManyToMany-를-사용하지-말자)
++ [5. 모든 연관관계는 지연로딩으로 설정](#5-모든-연관관계는-지연로딩으로-설정)
++ [6. 엔티티는 가급적 Setter 를 사용하지 말자](#6-엔티티는-가급적-Setter-를-사용하지-말자)
++ [7. 컬렉션은 필드에서 초기화 하자](#7-컬렉션은-필드에서-초기화-하자)
++ [8. Test, @Transactional](#8-Test-Transactional)
++ [9. Spring jpa query 로그에서 value (?) 값이 궁금할 경우](#9-Spring-jpa-query-로그에서-value-(?)-값이-궁금할-경우)
++ [10. lombok @ToString](#10-lombok-ToString)
++ [11. PUT, PATCH](#11-PUT-PATCH)
 
 ### 1. 유니크 제약 조건
 + 실무에서는 검증 로직이 있어도 멀티 쓰레드 상황을 고려해서 회원 테이블의 회원명 컬럼에 유니크 제약 조건을 추가하는 것이 안전하다.
@@ -70,7 +77,7 @@ public class MemberRepository {
 + 연관된 엔티티를 함께 DB에서 조회해야 하면, fetch join 또는 엔티티 그래프 기능을 사용한다.
 + @XToOne(OneToOne, ManyToOne) 관계는 기본이 즉시로딩이므로 직접 지연로딩으로 설정해야 한다.
 
-### 6. 엔티티는 가급적 Setter를 사용하지 말자
+### 6. 엔티티는 가급적 Setter 를 사용하지 말자
 + Setter가 열려있으면 변경 포인트가 너무 많아서, 유지보수가 어렵다.
 
 ### 7. 컬렉션은 필드에서 초기화 하자
@@ -90,7 +97,7 @@ class java.util.ArrayList
 class org.hibernate.collection.internal.PersistentBag
 ```
 
-### 8. Test @Transactional
+### 8. Test, @Transactional
 + Test 에서 @Transactional 은 실행후 백업하기에 테이블에 데이터가 안남는다.
 + 데이터가 남길 원할경우 @Commit 어노테이션을 추가해야한다.
 
