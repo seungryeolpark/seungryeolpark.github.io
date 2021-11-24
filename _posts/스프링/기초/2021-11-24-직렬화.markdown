@@ -1,5 +1,5 @@
 ---
-title: 스프링이란?
+title: 직렬화
 categories: springBase
 ---
 
