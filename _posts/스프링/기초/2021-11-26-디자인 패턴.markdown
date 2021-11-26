@@ -29,3 +29,100 @@ categories: springBase
 + Context 는 Client 에서 구체적인 Strategy 를 전달 받고, 해당 Strategy 를 통해 작업을 수행한다.
 + 장점
   + 컨텍스트는 그대로 유지되면서(OCP의 폐쇄 원칙) 필요에 따라 전략을 바꿔 쓸 수 있다.(OCP의 개방 원칙)
+
+## example
+Strategy Interface
+```java
+public interface Strategy{
+	void doStuff();
+	
+	StrategyName getStrategyName();
+}
+
+public enum StrategyName{
+	StrategyA,
+	StrategyB,
+	StrategyC
+}
+```
+Strategy Algorithm
+```java
+@Component
+public class StrategyA implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 A 구현하기
+	}
+    
+	@Override
+    public StrategyName getStrategyName(){
+		return StrategyName.StrategyA;
+	}
+}
+
+@Component
+public class StrategyB implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 B 구현하기
+	}
+    
+	@Override
+	public StrategyName getStrategyName(){
+		return StrategyName.StrategyB;
+	}
+}
+
+@Component
+public class StrategyC implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 C 구현하기
+	}
+    
+	@Override
+	public StrategyName getStrategyName(){
+		return StrategyName.StrategyC;
+	}
+}
+```
+Strategy Factory
+```java
+@Component
+public class StrategyFactory {
+  private Map<StrategyName, Strategy> strategies;
+  
+  @Autowired
+  public StrategyFactory(Set<Strategy> strategySet) {
+     createStrategy(strategySet);
+  }
+  
+  public Strategy findStrategy(StrategyName strategyName) {
+     return strategies.get(strategyName);
+  }
+  private void createStrategy(Set<Strategy> strategySet) {
+      strategies = new HashMap<StrategyName, Strategy>();
+      strategySet.forEach( 
+   strategy ->strategies.put(strategy.getStrategyName(), strategy));
+  }
+}
+```
+Strategy Service
+```java
+@Service
+public class SomeService {
+    @Autowired
+    private StrategyFactory strategyFactory;
+    
+    public void findSome(){
+    // 이름을 전달해서 전략을 가져올 수 있다.
+    Strategy strategy = strategyFactory.findStrategy(StrategyName.StrategyA);
+    
+    // 이제 전략에 정의된 메소드를 호출할 수 있다.
+    strategy.doStuff();
+    }
+}
+```
