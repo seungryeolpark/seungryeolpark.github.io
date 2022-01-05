@@ -3,10 +3,10 @@ title: "네트워크"
 categories: JP_TI
 ---
 
-중요
+중요  
 [1. OSI 7계층](#OSI-7-Layer)  
-[2. TCP:Handshake, UDP, 흐름제어, 혼잡제어](#TCP,-UDP)  
-[3. http https](#HTTP,-HTTPS-프로토콜)  
+[2. TCP:Handshake, UDP, 흐름제어, 혼잡제어](#TCP-UDP)  
+[3. http https](#HTTP-HTTPS-프로토콜)  
 
 ## 네트워크
 + 물리적 전송 매체를 사용하여 서로 연결된 장치 세트
