@@ -59,6 +59,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "JP_Algorithm" %}
+                        <li><a href="/categories/JP/Algorithm" class="">알고리즘 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% 
+            </ul>
         </li>
   </ul>
 </nav>
