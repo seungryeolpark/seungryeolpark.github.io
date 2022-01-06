@@ -5,7 +5,7 @@ categories: JP_TI
 
 [1. Java](#Java)  
 [2. Lambda(@functionalInterface)](#LambdafunctionalInterface)  
-[3. Stream API](#Stream-API)
+[3. Stream API](#Stream-API)  
 [4. JVM](#JVM)  
 [5. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
 [6. String Immutable](#String-Immutable)  
