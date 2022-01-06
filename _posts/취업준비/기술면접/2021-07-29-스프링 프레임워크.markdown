@@ -3,7 +3,7 @@ title: "스프링 프레임워크"
 categories: JP_TI
 ---
 
-[1. Framework](#Framework)
+[1. Framework](#Framework)  
 [2. Spring Framework](#Spring-Framework)
 
 ## Framework
