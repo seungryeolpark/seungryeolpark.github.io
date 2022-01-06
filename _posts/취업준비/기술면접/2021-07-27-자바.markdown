@@ -133,6 +133,14 @@ G1 GC에서는 그동안 봐왔던 Heap 영역에서 보지 못한 Humongous, Av
 + Young GC는 각 Region 중 GC대상 객체가 가장 많은 Region(Eden or Survivor 역할)에서 수행된다.
 + 이 Region에서 살아남은 객체를 다른 Region(Survivor 역할)으로 옮긴 후, 비워진 Region을 사용가능한 Region으로 돌리는 형태로 동작한다.
 
+### JRE, JDK
+#### 자바 런타임 환경(JRE, Java Runtime Environment)
++ JRE는 자바 클래스 라이브러리, 자바 가상 머신, 자바 클래스 로더를 포함하고 있습니다.
+
+#### 자바 개발 키트(JDK, Java Development Kit)
++ JDK는 JRE를 포함하고 있고 JRE는 JVM을 포함하고 있습니다. 따라서 JDK를 설치하면 JRE, JVM이 자동으로 다 설치됩니다.
++ JDK는 javac 등의 컴파일러, 디버거 등을 포함하고 있습니다. .java 파일을 만들어서 실행(빌드)하면 컴파일 작업을 거쳐 .class 라는 파일이 자동으로 생성됩니다.
+
 ## Class, Object, Instance
 ### Class(클래스)
 + 객체를 만들어 내기 위한 설계도
@@ -283,5 +291,3 @@ G1 GC에서는 그동안 봐왔던 Heap 영역에서 보지 못한 Humongous, Av
 
 ### 스네이크 표기법
 + ex) kor_score
-
-출처 - [기술면접 - JAVA](https://sas-study.tistory.com/53?category=774876)
