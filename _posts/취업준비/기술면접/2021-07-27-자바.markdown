@@ -5,10 +5,11 @@ categories: JP_TI
 
 [1. Java](#Java)  
 [2. Lambda(@functionalInterface)](#LambdafunctionalInterface)  
-[3. JVM](#JVM)  
-[4. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
-[5. String Immutable](#String-Immutable)  
-[6. Overriding vs Overloading](#Overriding-vs-Overloading)  
+[3. Stream API](#Stream-API)
+[4. JVM](#JVM)  
+[5. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
+[6. String Immutable](#String-Immutable)  
+[7. Overriding vs Overloading](#Overriding-vs-Overloading)  
 
 ## Java
 + JVM만 설치하면 컴퓨터의 운영체제와 상관없이 작동한다.(운영체제에 독립적)
@@ -113,6 +114,55 @@ TestInterface t4 = a -> "a:" + String.valueOf(a);
 //매개인자가 없는 경우에는 빈 소괄호를 사용해야 한다.
 InterfaceA1 a2 = () -> System.out.println("인자가 없는 함수 구현"); };
 ```
+
+## Stream API
++ 데이터를 추상화하고, 처리하는데 자주 사용되는 함수들을 정의
++ 여기서 데이터 추상화는 데이터 종류에 상관없이 같은 방식으로 데이터를 처리할 수 있다는 것을 의미하며, 그에 따라 재사용성을 높일 수 있다.
++ Stream API를 활용하면 코드의 라인수도 줄이고, 가독성도 높일 수 있다.
+
+### Stream API의 특징
++ 원본의 데이터를 변경하지 않는다.
++ 일회용이다.
++ 내부 반복으로 작업을 처리한다.
+
+### Stream API 연산 종류
+1. 생성하기
+  + Stream 객체를 생성하는 단계
+  + Stream은 재사용이 불가능하므로, 닫히면 다시 생성해주어야 한다.
+    + asList
+    + stream
+    + of
+    + range
+2. 가공하기
+  + 원본의 데이터를 별도의 데이터로 가공하기 위한 중간 연산
+  + 연산 결과를 Stream으로 다시 반환하기 때문에 연속해서 중간 연산을 이어갈 수 있다.
+    + 필터링 - filter
+    + 데이터 변환 - map
+    + 정렬 - sorted
+    + 중복 제거 - Distinct
+    + 특정 연산 수행 - peek
+      + Stream의 각각 요소들에 대해 특정 작업을 수행할 뿐 결과에 영향을 주지 않는다.
+    + 원시 Stream <-> Stream
+      + 일반적인 Stream 객체 -> mapToInt, mapToLong(), mapToDouble()이라는 특수한 Mapping 연산을 지원
+      + 그 반대로 원시객체는 mapToObject를 통해 일반적인 Stream 객체로 바꿀 수 있다.
+3. 결과만들기
+  + 가공된 데이터로부터 원하는 결과를 만들기 위한 최종 연산
+  + Stream의 요소들을 소모하면서 연산이 수행되기 때문에 1번만 처리가능하다.
+    + 최댓값/최솟값/총합/평균/갯수 - Max/Min/Sum/Average/Count
+    + 데이터 수집 - collect
+      + Collectors.toList()
+      + Collectors.joining(delimiter, prefix, suffix)
+        + delimiter : 각 요소 중간에 들어가 요소를 구분시켜주는 구분자
+        + prefix : 결과 맨 앞에 붙는 문자
+        + suffix : 결과 맨 뒤에 붙는 문자
+      + Collectors.averagingInt(), Collectors.summingInt(), Collectors.summarizingInt()
+      + Collectors.groupingBy()
+      + Collectors.partitioningBy()
+    + 조건 검사 - Match
+      + anyMatch : 1개의 요소라도 해당 조건을 만족하는가
+      + allMatch : 모든 요소가 해당 조건을 만족하는가
+      + nonMatch : 모든 요소가 해당 조건을 만족하지 않는가
+    + 특정 연산 수행 - forEach
 
 ## JVM(Java Virtual Machine)
 + 자바 가상 머신으로 자바와 운영체제 사이에서 중개자 역할을 수행한다.
