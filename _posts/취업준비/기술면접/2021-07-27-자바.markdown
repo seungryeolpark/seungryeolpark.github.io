@@ -4,10 +4,11 @@ categories: JP_TI
 ---
 
 [1. Java](#Java)  
-[2. JVM](#JVM)  
-[3. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
-[4. String Immutable](#String-Immutable)  
-[5. Overriding vs Overloading](#Overriding-vs-Overloading)  
+[2. Lambda(@functionalInterface)](#Lambda(@functionalInterface))
+[3. JVM](#JVM)  
+[4. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
+[5. String Immutable](#String-Immutable)  
+[6. Overriding vs Overloading](#Overriding-vs-Overloading)  
 
 ## Java
 + JVM만 설치하면 컴퓨터의 운영체제와 상관없이 작동한다.(운영체제에 독립적)
@@ -44,6 +45,74 @@ categories: JP_TI
   + 범용 인터페이스 하나보다는 특정 클라이언트를 위한 여러 개의 인터페이스 분리가 더 좋다.
 + 의존관계 역전 원칙(Dependency Inversion Principle)
   + 구체화(구현 클래스)가 아니라 추상화(인터페이스)에 의존해야 한다.
+
+### Java 8 특징
+1. lambda
+  + 함수를 하나의 표현식으로 나타낸 것을 의미한다.
+  + 람다는 함수형 프로그래밍 언어에서 사용되는 개념으로 메서드에 이름이 없어 익명 함수라고도 부릅니다.
+  + 장점
+    + 코드를 간결하게 작성할 수 있습니다.
+  + 단점
+    + 재활용이 불가능합니다.
+2. Optional
+  + null이 될 수 있는 객체를 담는 클래스입니다.
+  + 장점
+    + 명시적으로 반환값이 Null일 수 있음을 알려줍니다.
+    + 직접 null을 다루지 않아도 됩니다.
+3. 메소드 레퍼런스
+  + 메소드 레퍼런스는 람다의 축약 표현입니다.
+  + 다음과 같이 사용할 수 있습니다.
+    + 클래스 이름::메소드 이름
+    + 생성자::new
+4. stream
+  + stream의 데이터 흐름으로 람다를 사용할 수 있도록 제공합니다.
+5. Interface default, static method
+  + 인터페이스는 구현부가 없는 추상메소드만 가질 수 있었는데 default, static 지시어로 생성된 메서드는 구현부를 가질 수 있습니다.
+  + 차이점
+    + default 메서드
+      + 재정의 o
+      + 참조 변수로 호출
+    + static 메서드
+      + 재정의 x
+      + 클래스 메서드이기 때문에 객체 생성하지 않고 직접 사용
+6. LocalDateTime
+  + 불변 시간 정보를 가지고 있습니다.
+
+## Lambda(@functionalInterface)
++ 람다식은 결국 로컬 익명 구현객체를 생성하게 되지만, 이 람다식의 사용 목적은 인터페이스가 가지고 있는 메소드를 간편하게 즉흥적으로 구현해서 사용하는 것이 목적이다.
++ 람다식을 사용하기 위해서는 구현할 인터페이스가 필요하다.
++ 람다식으로 구현하기위한 인터페이스에는 조건이 하나 있는데 한개의 추상메소드만 가지고 있어야한다는 것이다.
++ 그리고 이런 인터페이스를 미리 함수적 인터페이스(@functionalInterface)라고 부른다. 즉 함수구현 전용 인터페이스라고 부르는 것이다.
++ @FunctionalInterface 어노테이션으로 이런 함수적 인터페이스를 명시할 수 있다.
+
+```java
+@FunctionalInterface
+public interface TestInterface{
+    public int plusAandB(int a, int b);
+    
+//  public int pulsAll(int ...a);
+//  컴파일 에러 발생
+}
+```
+@FunctionalInterface가 선언된 인터페이스에 추상메소드가 1개가 아니면 에러가 발생한다.
+
+```java
+InterfaceA1 a1 = (int a) -> {System.out.println("a:" + a); };
+//매개인자 자료형 생략
+InterfaceA1 a2 = (a) -> {System.out.println("a:" + a); };
+
+//매개인자가 하나뿐이라 소괄호 생략
+InterfaceA1 a3 = a -> {System.out.println("a:" + a); };
+//함수의 실행문이 한개라 중괄호 생략
+InterfaceA1 a4 = a -> System.out.println("a:" + a);
+
+TestInterface t3 = a -> { return "a:" + String.valueOf(a); };
+//함수의 실행문이 한개이며, 리턴문만 있을 경우 중괄호와 더불어 return문도 생략이 가능하다.
+TestInterface t4 = a -> "a:" + String.valueOf(a);
+
+//매개인자가 없는 경우에는 빈 소괄호를 사용해야 한다.
+InterfaceA1 a2 = () -> System.out.println("인자가 없는 함수 구현"); };
+```
 
 ## JVM(Java Virtual Machine)
 + 자바 가상 머신으로 자바와 운영체제 사이에서 중개자 역할을 수행한다.
