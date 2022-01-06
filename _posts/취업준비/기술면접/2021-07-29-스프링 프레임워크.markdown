@@ -4,7 +4,9 @@ categories: JP_TI
 ---
 
 [1. Framework](#Framework)  
-[2. Spring Framework](#Spring-Framework)
+[2. Spring Framework](#Spring-Framework)  
+[3. Spring MVC 구조의 처리과정](#Spring-MVC-구조의-처리과정)  
+[4. Spring Annotation](#Spring-Annotation)
 
 ## Framework
 + 특정 형태의 소프트웨어 문제를 해결하기 위해 상호 협력하는 클래스 프레임과 인터페이스 프레임의 집합
@@ -58,8 +60,11 @@ categories: JP_TI
   + 컨트롤의 제어권이 사용자가 아니라 프레임워크에 있어서 필요에 따라 스프링에서 사용자의 코드를 호출한다.
 + 스프링은 DI(Dependency Injection)을 지원
   + 각각의 계층이나 서비스들 간에 의존성이 존재할 경우 프레임워크가 서로 연결시켜준다.
+  + 객체들 간의 의존성을 줄이기 위해 사용되는 Spring의 IoC 컨테이너의 구체적인 구현 방식
+  + 프레임워크에 정의 되어 있는 인터페이스 interface, 추상 타입 abstract을 나의 코드에서 구현, 상속한 후 프레임워크에 넘겨주는 것
 + 스프링은 AOP(Aspect-Oriented Programming)을 지원
   + 트랜잭션이나 로깅, 보안과 같이 여러 모듈에서 공통적으로 사용하는 기능의 경우 해당 기능을 분리하여 관리할 수 있다.
+  + 공통된 기능을 재사용하는 기법
 + 스프링은 영속성과 관련된 다양한 서비스를 지원
   + MyBatis나 Hibernate 등 이미 완성도가 높은 데이터베이스 처리 라이브러리와 연결할 수 있는 인터페이스를 제공한다.
 + 스프링은 확장성이 높음
@@ -86,5 +91,19 @@ categories: JP_TI
 
 ### View
 + Controller가 처리한 결과값을 보여줄 View를 생성한다.
+
+## VO DTO
++ VO : 사용 되는 값이 객체로 표현되며, 값 변경이 없는 경우를 말한다.
++ DTO : 데이터의 전송을 위한 객체이며, 비지니스 로직까지 담아서 사용한다.
+
+## Spring Annotation
++ @을 이용한 주석, 자바 코드에 주석을 달아 특별한 의미를 부여한 것
++ @Override 어노테이션처럼 컴파일러를 위한 정보를 제공하기 위한 용도이다.
++ 스프링 프레임워크의 @Controller 어노테이션처럼 런타임에 리플렉션을 이용해서 특수 기능을 추가하기 위한 용도
++ 컴파일 과정에 어노테이션 정보로부터 코드를 생성하기 위한 용도
+
++ 자바 리플렉션
+  + 다른 언어에서는 존재하지 않는 특별한 기능
+  + 컴파일 시간이 아닌 실행시간에 동적으로 특정 클래스의 정보를 객체를 통해 분석 및 추출해내는 프로그래밍 기법
 
 출처 - [기술면접 - Spring framework](https://sas-study.tistory.com/58?category=774876)
