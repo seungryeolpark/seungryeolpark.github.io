@@ -8,7 +8,7 @@ categories: JP_TI
 [3. Spring MVC 구조의 처리과정](#Spring-MVC-구조의-처리과정)  
 [4. Spring boot](#Spring-boot)
 [5. Spring Annotation](#Spring-Annotation)  
-[6. Spring Security 요청 과정](#Spring-Security-요청-과정)
+[6. Spring Security 요청 과정](#Spring-Security-요청-과정)  
 [7. JPA](#JPA)
 
 ## Framework
