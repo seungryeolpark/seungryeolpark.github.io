@@ -4,7 +4,10 @@ categories: JP_TI
 ---
 
 [1. Java](#Java)  
-[2. JVM](#JVM)
+[2. JVM](#JVM)  
+[3. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
+[4. String Immutable](#String-Immutable)  
+[5. Overriding vs Overloading](#Overriding-vs-Overloading)  
 
 ## Java
 + JVM만 설치하면 컴퓨터의 운영체제와 상관없이 작동한다.(운영체제에 독립적)
@@ -140,6 +143,33 @@ G1 GC에서는 그동안 봐왔던 Heap 영역에서 보지 못한 Humongous, Av
 #### 자바 개발 키트(JDK, Java Development Kit)
 + JDK는 JRE를 포함하고 있고 JRE는 JVM을 포함하고 있습니다. 따라서 JDK를 설치하면 JRE, JVM이 자동으로 다 설치됩니다.
 + JDK는 javac 등의 컴파일러, 디버거 등을 포함하고 있습니다. .java 파일을 만들어서 실행(빌드)하면 컴파일 작업을 거쳐 .class 라는 파일이 자동으로 생성됩니다.
+
+## Call by Value vs Call by Reference
+### Call by Value
++ 실제 매개변수의 값은 형식 매개변수에 복사되고 두 유형의 매개변수는 서로 다른 메모리에 저장됩니다.
++ 따라서 함수 내에서 변경은 실제로 전달된 실제 매개변수에 반영되지 않습니다.
++ 장점
+  + 복사하여 처리하기 때문에 매개변수로 전달된 값이 보존이 되고 안전합니다.
++ 단점
+  + 복사를 하기 때문에 메모리 사용량이 늘어납니다.
+
+### Call by Reference
++ 실제 매개변수와 형식 매개변수 모두 동일한 메모리를 참조하므로 함수 내에서 변경한 내용이 실제로 전달된 실제 매개변수에 반영됩니다.
++ 장점
+  + 복사하지 않고 직접 참조를 하기 때문에 실행속도가 빠릅니다.
++ 단점
+  + 장점이자 단점인데, 직접 참조를 하기 때문에 원래의 값이 영향을 받습니다.
+
+## String Immutable
++ String str = "" 는 String literal로 생성하고 String str = new String(""); 는 new 연산자로 생성하기 때문에 문자열이 같아도 저장소에 공유되지 않고 힙영역에 각각 별도로 저장되었다.
+
+## Overriding vs Overloading
+### Overriding
++ 상속 관계에 있는 클래스 간에 같은 이름의 메서드를 정의하는 것을 말한다.
+
+### Overloading
++ 두 메서드가 같은 이름을 갖고 있으나 인자의 수나 자료형이 다른 경우를 말한다.
+
 
 ## Class, Object, Instance
 ### Class(클래스)
