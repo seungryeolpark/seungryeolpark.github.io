@@ -3,7 +3,7 @@ title: "자바"
 categories: JP_TI
 ---
 
-[1. Java](#Java)
+[1. Java](#Java)  
 [2. JVM](#JVM)
 
 ## Java
@@ -46,6 +46,92 @@ categories: JP_TI
 + 자바 가상 머신으로 자바와 운영체제 사이에서 중개자 역할을 수행한다.
 + 자바가 운영체제에 구애 받지 않고 프로그램을 실행할 수 있도록 도와줍니다.
 + 가비지 컬렉터를 사용한 메모리 관리도 자동으로 수행하며, 다른 하드웨어와 다르게 레지스터 기반이 아닌 스택 기반으로 동작합니다.
+
+### 자바 프로그램 실행 단계
+
+![0](https://user-images.githubusercontent.com/48073115/148403573-9d90fe48-8cf5-4dec-8ede-d5f48682b834.png)
+
+1. 자바 컴파일러에 의해 자바 소스 파일은 바이트 코드로 반환됩니다.
+2. 이러한 바이트 코드를 JVM에서 읽어들인 다음에, 복잡한 과정을 거쳐 어떤 운영체제든 간에 프로그램을 실행할 수 있도록 만드는 것입니다.
+
+### JVM 메모리 구조
+
+![1](https://user-images.githubusercontent.com/48073115/148404188-79469341-57ca-4a1b-8155-003e7400a181.png)
+
++ JVM 구조는 크게 Garbage Collector, Execution Engine, Class Loader, Runtime Data Area로 나눌 수 있습니다.
++ Class Loader
+  + JVM 내로 클래스 파일을 로드하고, 링크를 통해 배치하는 작업을 수행하는 모듈이다.
++ Exceution Engine
+  + Class Loader를 통해 JVM 내의 Runtime Data Area에 배치된 바이트 코드들을 명령어 단위로 읽어서 실행합니다.
++ Garbage Collector
+  + Garbage Collector는 힙 메모리 영역에 생성된 객체들 중에서 참조되지 않은 객체들을 탐색 후 제거하는 역할을 합니다.
++ Runtime Data Area
+  + JVM내의 메모리 영역으로 자바 애플리케이션을 실행할 때 사용되는 데이터들을 적재하는 영역입니다.
+
+![2](https://user-images.githubusercontent.com/48073115/148405003-249aacc2-345f-43fa-a4ae-a03a458c59a8.png)
+
++ Method area
+  + 모든 쓰레드가 공유하는 메모리 영역입니다. 메소드 영역은 클래스, 인터페이스, 메소드, 필드, Static 변수 등의 바이트 코드를 보관합니다.
++ Heap area
+  + 모든 쓰레드가 공유하며, new 키워드로 생성된 객체와 배열이 생성되는 영역입니다.
+  + 또한 메소드 영역에 로드된 클래스만 생성이 가능하고 Garbage Collector가 참조되지 않는 메모리를 확인하고 제거하는 영역입니다.
++ Stack area
+  + 메서드 호출 시마다 각각의 스택 프레임(그 메서드만을 위한 공간)이 생성합니다.
+  + 메서드 안에서 사용되는 값들을 저장하고, 호출된 메서드의 매개변수, 지역변수, 리턴 값 및 연산 시 일어나는 값들을 임시로 저장합니다.
+  + 마지막으로 메서드 수행이 끝나면 프레임별로 삭제합니다.
++ PC Register
+  + 쓰레드가 시작될 때 생성되며, 생성될 때 마다 생성되는 공간으로 쓰레드마다 하나씩 존재합니다.
+  + 쓰레드가 어떤 부분을 무슨 명령으로 실행해야할 지에 대한 기록을 하는 부분으로 현재 수행중인 JVM 명령의 주소를 갖습니다.
++ Native method stack
+  + 자바 외 언어로 작성된 네이티브 코드를 위한 메모리 영역입니다.
+
+### 다양한 GC 알고리즘
++ GC를 수행하기 위해 Stop the World에 의해 애플리케이션이 중지되는 것이 있다.
++ Heap 사이즈가 커지면서 애플리케이션의 지연현상이 두드러지게 되었고, 이를 막기 위해 다양한 GC 알고리즘을 지원하고 있다.
+
+![3](https://user-images.githubusercontent.com/48073115/148406788-ce558ce0-7838-43f2-add2-6ec8ab06f8b9.png)
+
+#### Mark-Sweep-Compaction
++ 기본적인 GC 과정
+  + 사용되지 않는 객체를 식별하는 작업(Mark)
+  + 사용되지 않는 객체를 제거하는 작업(Sweep)
+  + 파편화된 메모리 영역을 앞에서부터 채워나가는 작업(Compaction)
+
+#### Serial GC
++ 순차적인 GC 방식
++ 옛날 GC를 처리하는 스레드가 하나이기 때문에 순차적으로 동작할 수 밖에 없다.
+
+#### Parallel GC
++ GC를 처리하는 스레드를 여러개로 늘려 좀 더 빠른 동작이 가능하게한 방식
++ Serial GC보다 STW(Stop The World) 시간이 좀 더 적게 걸리는 Parallel GC에서의 Java 애플리케이션이 좀 더 매끄럽게 동작한다.
+
+#### Parallel Old GC
++ Parallel GC를 조금 더 업그레이드한 버전이다.
++ Parallel GC에서 Old 영역의 GC 알고리즘을 개선한 버전이다.
++ Serial GC, Parallel GC 알고리즘은 Mark-Sweep-Compaction 이었으며, Parallel Old GC 에서는 개선된 버전인 Mark-Summary-Compaction 알고리즘을 사용한다.
++ Summary 단계에서는 이미 GC가 수행된 영역에서 살아있는 객체를 식별하는 작업을 진행한다.
+
+#### CMS GC
++ 앞의 GC 보다 좀 더 개선된 방식이다.
++ 개선이 된 만큼 성능은 좋아졌지만 GC의 과정은 좀 더 복잡해진 방식이다.
++ CMS는 GC 대상을 최대한 자세히 파악한 후, 정리하는 시간(STW가 발생하는 시간)을 짧게 가져가겠다는 GC 방식이다.
++ 다만 GC 대상을 파악하는 과정이 복잡한 여러단계로 수행되기 때문에 다른 GC 대비 CPU 사용량이 높다
+
+#### G1 GC
++ G1 GC는 큰 힙 메모리에서 짧은 GC 시간을 보장하는데 그 목적을 둔다.
++ 전체 힙 메모리 영역을 Region 이라는 특정한 크기로 나눠서 각 Region의 상태에 따라 그 Region에 역할(Eden, Survivor, Old)이 동적으로 부여되는 상태이다.
+
+![4](https://user-images.githubusercontent.com/48073115/148409602-54fa68f8-015b-48a8-8999-473c43c2fdce.png)
+
+G1 GC에서는 그동안 봐왔던 Heap 영역에서 보지 못한 Humongous, Available/Unused 이 존재하며 두 Region에 대한 역할은 아래와 같다.
++ Humongous
+  + Region 크기의 50%를 초과하는 큰 객체를 저장하기 위한 공간이며, 이 Region 에서는 GC 동작이 최적으로 동작하지 않는다.
++ Available/Unused
+  + 아직 사용되지 않은 Region을 의미한다.
+
++ G1 GC에서 Young GC를 수행할 때는 STW 현상이 발생하며, STW 시간을 최대한 줄이기 위해 멀티스레드로 GC를 수행한다.
++ Young GC는 각 Region 중 GC대상 객체가 가장 많은 Region(Eden or Survivor 역할)에서 수행된다.
++ 이 Region에서 살아남은 객체를 다른 Region(Survivor 역할)으로 옮긴 후, 비워진 Region을 사용가능한 Region으로 돌리는 형태로 동작한다.
 
 ## Class, Object, Instance
 ### Class(클래스)
