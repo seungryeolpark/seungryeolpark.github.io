@@ -4,7 +4,7 @@ categories: JP_TI
 ---
 
 [1. Java](#Java)  
-[2. Lambda(@functionalInterface)](#Lambda(@functionalInterface))
+[2. Lambda(@functionalInterface)](#LambdafunctionalInterface)  
 [3. JVM](#JVM)  
 [4. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
 [5. String Immutable](#String-Immutable)  
