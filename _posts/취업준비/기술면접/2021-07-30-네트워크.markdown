@@ -12,7 +12,7 @@ categories: JP_TI
 [6. DNS](#DNS)  
 [7. 프록시](#프록시)  
 [8. CORS](#CORS)  
-[9. 
+[9. JWT](#JWT)  
 
 ## 네트워크
 + 물리적 전송 매체를 사용하여 서로 연결된 장치 세트
@@ -504,17 +504,26 @@ categories: JP_TI
 <table>
   <thead>
     <tr>
-      <th>Cookie & Session</th>
-      <th>JWT</th>
+      <th></th>
+      <th width="40%">Cookie & Session</th>
+      <th width="40%">JWT</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>최상위 바이트가 앞에 오는 경우<br>
-        사람이 읽고 쓰는 방법과 같아서 디버깅이 쉬움 - 수가 커지면 메모리에 저장된 데이터를 오른쪽으로 옮겨야 함</td>
-      <td>최하위 바이트가 앞에 오는 경우<br>
-        디버깅이 어려움<br>
-        수가 커지더라도 오버헤드가 발생하지 않음</td>
+      <td>장점</td>
+      <td>Cookie만 사용하는 방식보단 보안 향상</br>
+          서버 쪽에서 Session 통제 가능</br>
+          네트워크 부하 낮음</td>
+      <td>인증을 위한 별도의 저장소가 필요 없음</br>
+          별도의 I/O 작업 없는 빠른 인증 처리</br>
+          확장성이 우수함</td>
+    </tr>
+    <tr>
+      <td>단점</td>
+      <td>세션 저장소 사용으로 인한 서버 부하</td>
+      <td>토큰의 길이가 늘어날수록 네트워크 부하</br>
+          특정 토큰을 강제로 만료시키기 어려움</td>
     </tr>
   </tbody>
 </table>
