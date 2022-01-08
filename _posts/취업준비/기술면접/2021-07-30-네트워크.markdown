@@ -505,23 +505,23 @@ categories: JP_TI
   <thead>
     <tr>
       <th></th>
-      <th width="40%">Cookie & Session</th>
-      <th width="40%">JWT</th>
+      <th width="40%">장점</th>
+      <th width="40%">단점</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>장점</td>
+      <td>Cookie & Session</td>
       <td>Cookie만 사용하는 방식보단 보안 향상</br>
           서버 쪽에서 Session 통제 가능</br>
           네트워크 부하 낮음</td>
+      <td>세션 저장소 사용으로 인한 서버 부하</td>
+    </tr>
+    <tr>
+      <td>JWT</td>
       <td>인증을 위한 별도의 저장소가 필요 없음</br>
           별도의 I/O 작업 없는 빠른 인증 처리</br>
           확장성이 우수함</td>
-    </tr>
-    <tr>
-      <td>단점</td>
-      <td>세션 저장소 사용으로 인한 서버 부하</td>
       <td>토큰의 길이가 늘어날수록 네트워크 부하</br>
           특정 토큰을 강제로 만료시키기 어려움</td>
     </tr>
