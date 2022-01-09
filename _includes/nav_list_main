@@ -66,6 +66,13 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+             <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "JP_DataStructure" %}
+                        <li><a href="/categories/JP/DataStructure" class="">자료구조 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         </li>
   </ul>
 </nav>
