@@ -6,8 +6,6 @@ categories: project_community
 [1. @Validate를 이용한 검증 구현](#Validate를-이용한-검증-구현)
 
 ## @Validate를 이용한 검증 구현
-![1](https://user-images.githubusercontent.com/48073115/149625022-9aad099a-cdf9-4273-97f4-fbd1bfa8365a.png)
-
 ### 코드
 ![1](https://user-images.githubusercontent.com/48073115/149625165-478dc31e-3c60-4000-ac85-c459fc1c3e9d.png)
 
