@@ -78,7 +78,7 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "book_object" %}
-                        <li><a href="/categories/book/object" style="font-size:5px;">오브젝트 : 코드로 이해하는 객체지향 설계 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/book/object" style="font-size:8px;">오브젝트 : 코드로 이해하는 객체지향 설계 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -86,7 +86,7 @@
              <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "project_community" %}
-                        <li><a href="/categories/project/community" style="font-size:5px;">community ({{category[1].size}})</a></li>
+                        <li><a href="/categories/project/community" style="font-size:8px;">community ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
