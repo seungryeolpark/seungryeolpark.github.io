@@ -3,8 +3,8 @@ title: "validation"
 categories: project_community
 ---
 
-[1. @Validate를 이용한 검증 구현](#Validate를-이용한-검증-구현)  
-[2. SweetAlert2를 이용한 검증 구현](#SweetAlert2를-이용한-검증-구현)
+[1. @Validate를 이용한 검증 구현](#validate를-이용한-검증-구현)  
+[2. SweetAlert2를 이용한 검증 구현](#sweetalert2를-이용한-검증-구현)
 
 ## @Validate를 이용한 검증 구현
 ### 코드
