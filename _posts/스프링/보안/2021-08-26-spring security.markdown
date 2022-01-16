@@ -3,6 +3,10 @@ title: spring security
 categories: springSecurity
 ---
 
+[1. Spring Security](#Spring-Security)  
+[2. Spring Security 처리 과정](#Spring-Security-처리-과정)
+
+## Spring Security
 ### Spring Security란?
 + 보안 솔루션을 제공해주는 Spring 기반의 스프링 하위 프레임워크
 + Spring Security 에서 제공해주는 보안 솔루션을 사용하면 개발자가 보안 관련 로직을 짤 필요가 없어 굉장히 간편하다.
@@ -180,4 +184,56 @@ public class UserService implements UserDetailsService {
 
 + 기본 반환 타입인 UserDetails 를 dto 인 UserInfo 로 바꿔줍니다.
 + UserInfo 는 UserDetails 을 상속받았기 때문에 자동으로 다운 캐스팅이 됩니다.
+
+## Spring Security 처리 과정
+![1](https://user-images.githubusercontent.com/48073115/149673061-2a5bfa7d-c379-489d-97d8-2f1be9a43596.png)
+
+### 1. HTTP 요청 수신(Http Request) 및 AuthenticationFilter 통과
++ Spring Security는 **일련의 연결된 필터**들을 가지고 있다.
++ 요청(request)은 인증(Authentication)과 권한부여(Authorization)를 위해 이 필터들을 통과하게 된다.
++ 이 필터를 통과하는 과정은, 해당 요청과 관련된 인증 필터를 찾을 때 까지 지속된다.
+  + ex) 로그인 form submit 요청은 UsernamePasswordAuthenticationFilter에 도달할 때 까지 필터 체인을 통과한다.
+
+### 2. 사용자 자격 증명을 기반으로 AuthenticationToken 생성
++ 인증 요청이 관련 AuthenticationFilter에 의해 수신되면 수신된 요청에서 사용자 이름과 비밀번호를 추출한다.
++ 추출된 자격 증명(credentials)을 기반으로 인증 개체를 만든다.
++ 추출된 자격 증명(credentials)을 통해 UsernamePasswordAuthenticationToken이 생성된다.
+
+### 3. AuthenticationManager를 위해 생서된 AuthenticationToken 위임
++ 만들어진 UsernamePasswordAuthenticationToken은 AuthenticationManager의 인증 메서드를 호출하는데 사용됨
++ AuthenticationManager는 단순한 **인터페이스이며** 실제 구현은 ProviderManager이다.
++ ProviderManager는 제공된 각 AuthenticationProvider를 살펴보고 전달된 인증 개체(UsernamePasswordAuthenticationToken)를 기반으로 사용자 인증을 시도한다.
+
+### 4. AuthenticationProvider 목록으로 인증 시도
++ AuthenticationProvider는 제공된 인증 개체로 사용자를 인증한다.
+
+### 5. UserDetailsService
++ 일부 AuthenticationProvider는 사용자 이름(username)을 기반으로 사용자 세부 정보를 검색하기 위해 UserDetailService를 사용할 수 있다.
+
+```java
+public interface UserDetailService {
+    UserDetail loadUserByUsername(String username) throws UsernameNotFoundException;
+}
+```
+
+### 6. UserDetails
+
+### 7. User
++ UserDetail은 사용자 정보(User)를 담고 있는 인터페이스다.
+
+### 8. AuthenticationException
++ AuthenticationProvider 인터페이스에 의해 사용자가 성공적으로 인증되면 완전히 채워진 인증개체가 반환된다.
++ 그렇지 않으면 AuthenticationException이 발생하며 인증 메니커즘을 지원하는 AuthenticationEntryPoint에 의해 처리된다.
+
+### 9. 인증 완료
++ AuthenticationManager는 획득한 완전히 채워진 인증개체를 관련 인증 필터로 다시 반환한다.
+
+### 10. SecurityContext에 인증 개체 설정
++ 관련 AuthenticationFilter는 향후 필터 사용을 위해 획득한 인증 개체를 SecurityContext에 저장한다.
+
+```java
+SecurityContextHolder.getContext().setAuthentication(authentication);
+```
+
+[출처](https://doozi316.github.io/spring%20security/2021/02/15/Spring4/)
 
