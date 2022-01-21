@@ -3,13 +3,13 @@ title: "자바"
 categories: JP_TI
 ---
 
-[1. Java](#Java)  
-[2. Lambda(@functionalInterface)](#LambdafunctionalInterface)  
-[3. Stream API](#Stream-API)  
-[4. JVM](#JVM)  
-[5. Call by Value vs Call by Reference](#Call-by-Value-vs-Call-by-Reference)  
-[6. String Immutable](#String-Immutable)  
-[7. Overriding vs Overloading](#Overriding-vs-Overloading)  
+[1. Java](#java)  
+[2. Lambda(@functionalInterface)](#lambdafunctionalinterface)  
+[3. Stream API](#stream-api)  
+[4. JVM](#jvm)  
+[5. Call by Value vs Call by Reference](#call-by-value-vs-call-by-reference)  
+[6. String Immutable](#string-immutable)  
+[7. Overriding vs Overloading](#overriding-vs-overloading)  
 
 ## Java
 + JVM만 설치하면 컴퓨터의 운영체제와 상관없이 작동한다.(운영체제에 독립적)
