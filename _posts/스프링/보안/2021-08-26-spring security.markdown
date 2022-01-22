@@ -3,8 +3,8 @@ title: spring security
 categories: springSecurity
 ---
 
-[1. Spring Security](#Spring-Security)  
-[2. Spring Security 처리 과정](#Spring-Security-처리-과정)
+[1. Spring Security](#spring-security)  
+[2. Spring Security 처리 과정](#spring-security-처리-과정)
 
 ## Spring Security
 ### Spring Security란?
