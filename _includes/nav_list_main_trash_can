@@ -1,0 +1,22 @@
+<span class="nav__sub-title">취업 준비</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "JP_TI" %}
+                        <li><a href="/categories/JP/TI" class="">기술 면접 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "JP_algorithm" %}
+                        <li><a href="/categories/JP/algorithm" class="">알고리즘 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+             <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "JP_dataStructure" %}
+                        <li><a href="/categories/JP/dataStructure" class="">자료구조 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>

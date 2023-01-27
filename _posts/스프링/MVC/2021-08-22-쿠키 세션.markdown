@@ -1,0 +1,126 @@
+---
+title: 쿠키 세션
+categories: springMVC
+---
+
+## 쿠키
+**쿠키 생성**
+
+![쿠키1](https://user-images.githubusercontent.com/48073115/130345420-21400058-3832-4658-b98e-fda9c7d6702d.png)
+
+**클라이언트 쿠키 전달1**
+
+![쿠키2](https://user-images.githubusercontent.com/48073115/130345437-f11a4ee7-237f-4b73-872d-d23a51879d28.png)
+
+**클라이언트 쿠키 전달2**
+
+![쿠키3](https://user-images.githubusercontent.com/48073115/130345469-60ec5950-c2d2-4a10-885f-6bdc349c6526.png)
+
+**쿠키에는 영속 쿠키와 세션 쿠키가 있다.**
++ 영속 쿠키 : 만료 날짜를 입력하면 해당 날짜까지 유지
++ 세션 쿠키 : 만료 날짜를 생략하면 브라우저 종료시 까지만 유지
+
+### 쿠키 생성 로직
+```java
+Cookie idCookie = new Cookie("memberId", String.valueOf(loginMember.getId()));
+response.addCookie(idCookie);
+```
+
++ 보통 로그인에 성공하면 쿠키를 생성하고 HttpServletResponse 에 담는다.
++ 쿠키 이름은 memberId 이고, 값은 회원의 id 를 담아둔다.
+
+### 쿠키 사용 예
+**쿠키 변수 사용**
+```java
+@GetMapping("/")
+ public String homeLogin(
+   @CookieValue(name = "memberId", required = false) Long memberId,
+  Model model) {
+```
+
++ @CookieValue 를 사용하면 편리하게 쿠키를 조회할 수 있다.
++ 로그인 하지 않은 사용자도 홈에 접근할 수 있기 때문에 required = false 를 사용한다.
+
+**쿠키 삭제**
+```java
+private void expireCookie(HttpServletResponse response, String cookieName) {
+   Cookie cookie = new Cookie(cookieName, null);
+   cookie.setMaxAge(0);
+   response.addCookie(cookie);
+}
+```
+
++ cookie.setMaxAge(0) 를 사용하면 해당 쿠키는 즉시 종료된다.
+
+### 쿠키 보안 문제
+**보안 문제**
++ 쿠키 값은 임의로 변경할 수 있다.
+  + 클라이언트가 쿠키를 강제로 변경하면 다른 사용자가 된다.
+  + 실제 웹브라우저 개발자모드(F12) -> Application -> Cookie 변경으로 확인
+  + Cookie : memberId=1 -> Cookie : memberId=2 (다른 사용자의 이름이 보임)
++ 쿠키에 보관된 정보는 훔쳐갈 수 있다.
++ 해커가 쿠키를 한번 훔쳐가면 평생 사용할 수 있다.
+  + 해커가 쿠키를 훔쳐가서 그 쿠키로 악의적인 요청을 계속 시도할 수 있다.
+
+**대안**
++ 쿠키에 중요한 값을 노출하지 않고, 사용자 별로 예측 불가능한 임의의 토큰(랜덤 값)을 노출하고, 서버에서 토큰과 사용자 id를 매핑해서 인식한다. 그리고 서버에서 토큰을 관리한다.
++ 토큰은 해커가 임의의 값을 넣어도 찾을 수 없도록 예상 불가능 해야한다.
++ 해커가 토큰을 털어가도 시간이 지나면 사용할 수 없도록 서버에서 해당 토큰의 만료시간을 짧게 유지한다.(예 : 30분) 또는 해킹이 의심되는 경우 서버에서 해당 토큰을 강제로 제거하면 된다.
+
+## 세션
+
+### 세션 동작 방식
+**로그인**
+
+![세션1](https://user-images.githubusercontent.com/48073115/130356820-b5105f2e-6f3a-4c75-829a-c2f60500743e.png)
+
++ 사용자가 loginId, password 정보를 전달하면 서버에서 해당 사용자가 맞는지 확인한다.
+
+**세션 생성**
+
+![세션2](https://user-images.githubusercontent.com/48073115/130356848-5fe054f2-fddc-46f7-8dcb-fe0ad5bf73d5.png)
+
++ 세션 ID를 생성하는데, 추정 불가능해야 한다.
++ **UUID는 추정이 불가능하다.**
++ 생성된 세션 ID와 세션에 보관할 값(memberA)을 서버의 세션 저장소에 보관한다.
+
+**세션id를 응답 쿠키로 전달**
+
+![세션3](https://user-images.githubusercontent.com/48073115/130356904-301511db-06ba-4a1d-ba4b-33d939bae781.png)
+
++ **클라이언트와 서버는 결국 쿠키로 연결이 되어야 한다.**
++ 서버는 클라이언트에 mySessionId 라는 이름으로 세션ID 만 쿠키에 담아서 전달한다.
++ 클라이언트는 쿠키 저장소에 mySessionId 쿠키를 보관한다.
+
+**중요**
++ 여기서 중요한 포인트는 회원과 관련된 정보는 전혀 클라이언트에 전달하지 않는다는 것이다.
++ 오직 추정 불가능한 세션 ID만 쿠키를 통해 클라이언트에 전달한다.
+
+**클라이언트의 세션id 쿠키 전달**
+
+![세션4](https://user-images.githubusercontent.com/48073115/130356988-9e31b33b-5d7c-43e0-9f57-4f1cbb7d4eae.png)
+
++ 클라이언트는 요청시 항상 mySessionId 쿠키를 전달한다.
++ 서버에서는 클라이언트가 전달한 mySessionId 쿠키 정보로 세션 저장소를 조회해서 로그인시 보관한 세션 정보를 사용한다.
+
+**정리**  
+세션을 사용해서 서버에서 중요한 정보를 관리하게 되었다. 덕분에 다음과 같은 보안 문제들을 해결할 수 있다.
++ 쿠키 값을 변조 가능 -> 예상 불가능한 복잡한 세션id를 사용한다.
++ 쿠키에 보관하는 정보는 클라이언트 해킹시 털릴 가능성이 있다. -> 세션id가 털려도 여기에는 중요한 정보가 없다.
++ 쿠키 탈취 후 사용 -> 해커가 토큰을 털어가도 시간이 지나면 사용할 수 없도록 서버에서 세션의 만료시간을 짧게 유지한다.(예 : 30분) 또는 해킹이 의심되는 경우 서버에서 해당 세션을 강제로 제거하면 된다.
+
+### 세션 관리
+세션 관리는 크게 다음 3가지 기능을 제공하면 된다.
+
+**세션 생성**
++ sessionId 생성 (임의의 추정 불가능한 랜덤 값)
++ 세션 저장소에 sessionId와 보관할 값 저장
++ sessionId로 응답 쿠키를 생성해서 클라이언트에 전달
+
+**세션 조회**
++ 클라이언트가 요청한 sessionId 쿠키의 값으로, 세션 저장소에 보관한 값 조회
+
+**세션 만료**
++ 클라이언트가 요청한 sessionId 쿠키의 값으로, 세션 저장소에 보관한 sessionId와 값 제거
+
+출처 - [스프링 MVC 2편 - 백엔드 웹 개발 활용 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-2/dashboard)

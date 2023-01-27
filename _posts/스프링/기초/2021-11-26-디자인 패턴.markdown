@@ -1,0 +1,188 @@
+---
+title: 디자인 패턴
+categories: springBase
+---
+
+1. [템플릿 메서드 패턴](#템플릿-메서드-패턴)
+2. [전략 패턴](#전략-패턴)
+3. [템플릿 콜백 패턴](#템플릿-콜백-패턴)
+4. [프록시 패턴](#프록시-패턴)
+
+# 템플릿 메서드 패턴
++ 어떤 작업을 처리하는 일부분을 **서브 클래스로 캡슐화**해 전체 일을 수행하는 구조는 바꾸지 않으면서 특정 단계에서 수행하는 내역을 바꾸는 패턴
+  + **전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화**할 때 유용하다.
+  + 동일한 기능을 상위 클래스에서 정의하면서 확장, 변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다.
+
+![템플릿 메서드 패턴](https://user-images.githubusercontent.com/48073115/143543269-1706a4ff-b98d-4ec0-9d4b-4f61a31228fb.png)
+
++ 장점
+  + 중복 코드를 줄일 수 있다.
+  + 자식 클래스의 역할을 줄여 핵심 로직의 관리가 용이하다.
+  + 좀 더 코드를 객체지향적으로 구성할 수 있다.
+
++ 단점
+  + 추상 메소드가 많아지면서 클래스 관리가 복잡해진다.
+  + 클래스간의 관계와 코드가 꼬여버릴 염려가 있다.
+
+# 전략 패턴
++ 오브젝트를 아예 둘로 분리하고 클래스 레벨에서는 **인터페이스를 통해서만 의존**하도록 만든다.
++ 템플릿 메서드 패턴보다 더 유연하고 확장성이 뛰어나다.
+
+
+![전략 패턴](https://user-images.githubusercontent.com/48073115/143545334-9c5a0b6f-59b0-4d4c-95d5-182691fa1345.png)
+
++ Context 는 Client 에서 구체적인 Strategy 를 전달 받고, 해당 Strategy 를 통해 작업을 수행한다.
++ 장점
+  + 컨텍스트는 그대로 유지되면서(OCP의 폐쇄 원칙) 필요에 따라 전략을 바꿔 쓸 수 있다.(OCP의 개방 원칙)
+
+## example
+Strategy Interface
+```java
+public interface Strategy{
+	void doStuff();
+	
+	StrategyName getStrategyName();
+}
+
+public enum StrategyName{
+	StrategyA,
+	StrategyB,
+	StrategyC
+}
+```
+Strategy Algorithm
+```java
+@Component
+public class StrategyA implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 A 구현하기
+	}
+    
+	@Override
+    public StrategyName getStrategyName(){
+		return StrategyName.StrategyA;
+	}
+}
+
+@Component
+public class StrategyB implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 B 구현하기
+	}
+    
+	@Override
+	public StrategyName getStrategyName(){
+		return StrategyName.StrategyB;
+	}
+}
+
+@Component
+public class StrategyC implements Strategy{
+
+	@Override
+	public void doStuff(){
+		// 알고리즘 C 구현하기
+	}
+    
+	@Override
+	public StrategyName getStrategyName(){
+		return StrategyName.StrategyC;
+	}
+}
+```
+Strategy Factory
+```java
+@Component
+public class StrategyFactory {
+  private Map<StrategyName, Strategy> strategies;
+  
+  @Autowired
+  public StrategyFactory(Set<Strategy> strategySet) {
+     createStrategy(strategySet);
+  }
+  
+  public Strategy findStrategy(StrategyName strategyName) {
+     return strategies.get(strategyName);
+  }
+  private void createStrategy(Set<Strategy> strategySet) {
+      strategies = new HashMap<StrategyName, Strategy>();
+      strategySet.forEach( 
+   strategy ->strategies.put(strategy.getStrategyName(), strategy));
+  }
+}
+```
+Strategy Service
+```java
+@Service
+public class SomeService {
+    @Autowired
+    private StrategyFactory strategyFactory;
+    
+    public void findSome(){
+    // 이름을 전달해서 전략을 가져올 수 있다.
+    Strategy strategy = strategyFactory.findStrategy(StrategyName.StrategyA);
+    
+    // 이제 전략에 정의된 메소드를 호출할 수 있다.
+    strategy.doStuff();
+    }
+}
+```
+
+# 템플릿 콜백 패턴
++ 전략 패턴의 기본 구조에 인터페이스를 상속하는 클래스를 만들지 않고 익명 내부 클래스를 활용하는 방식
+
+## example
+Strategy Interface
+```java
+public interface Strategy {
+    void runStrategy();
+}
+```
+Soldier
+```java
+public class Soldier {
+	void runContext(String weapon) {
+		System.out.println("전투 시작");
+		executeWeapon(weapon).runStrategy();
+		System.out.println("전투 종료");
+	}
+	
+	private Strategy executeWeapon(final String weapon) {
+		return new Strategy() {
+			@Override
+			public void runStrategy() {
+				System.out.println(weapon);
+			}
+		};
+	}
+}
+```
+Client
+```java
+public class Client {
+	public static void main(String[] args) {
+		Soldier soldier = new Soldier();
+		
+		soldier.runContext("총");
+		soldier.runContext("칼");
+		soldier.runContext("활");
+	}
+}
+```
+
+# 프록시 패턴
++ 프록시 객체는 원래 객체를 감싸서 client 의 요청을 처리하게 하는 패턴이다.
++ 프록시 패턴을 쓰는 이유는 접근을 제어하고 싶거나, 부가 기능을 추가하고 싶을 때 사용한다.
++ 장점
+	+ 사이즈가 큰 객체가 로딩되기 전에도 proxy 를 통해 참조할 수 있다.(이미지, 동영상 등의 로딩에서 반응성 혹은 성능 향상- 가상 프록시)
+	+ 실제 객체의 public, protected 메소드들을 숨기고 인터페이스를 통해 노출시킬 수 있다.(안전성- 보호 프록시)
+	+ 로컬에 있지 않고 떨어져 있는 객체를 사용할 수 있다.(RMI, EJB 의 분산처리 등- 원격 프록시)
+	+ 원본 객체의 참조만 필요할 때 원본 객체를 사용하다가, 최대한 늦게 복사가 필요한 시점에 원본 객체를 복사하여 사용하는 방식.(Concureent package 의 CopyInWriteArrayList - 변형된 가상 프록시)
++ 단점
+	+ 객체를 생성할 때 한단계를 거치게 되므로, 빈번한 객체 생성이 필요한 경우 성능이 저하될 수 있다.
+	+ 프록시 안에서 실제 객체 생성을 위해서 thread 가 생성되고 동기화가 구현되야 하는 경우 성능이 저하되고 로직이 난해해질 수 있다.
+

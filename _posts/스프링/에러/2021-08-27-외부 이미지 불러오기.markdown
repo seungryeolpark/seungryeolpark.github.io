@@ -1,0 +1,25 @@
+---
+title: 외부 이미지 불러오기
+categories: springError
+---
+
+파일 경로가 외부일 경우 Not allowed to local resuorce 가 뜨면서 이미지가 보이지 않는다.
+
+### 원인
+보안 문제로 외부 경로에서 이미지 가져오는게 안된다.
+
+### 해결법
+class WebConfig implements WebMvcConfigurer 를 만들고 
+Override method 인 public void addResourceHandlers(ResourceHandlerRegistry registry) 를 만들어 
+registry.addResourceHandler("경로").addResourceLocations("외부경로"); 로 경로를 외부경로로 바꿔 써야한다.
+
+**example**
+```java
+public class WebConfig implements WebMvcConfigurer {
+  @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+      registry.addResourceHandler("/upload/**")
+              .addResourceLocations("file:///" + 이미지 경로);
+    }
+}
+```

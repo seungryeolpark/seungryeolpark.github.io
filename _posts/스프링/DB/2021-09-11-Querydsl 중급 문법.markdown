@@ -1,0 +1,257 @@
+---
+title: Querydsl 중급 문법
+categories: springDB
+---
+
+**목차**
++ [프로젝션과 결과 반환](#프로젝션과-결과-반환)
++ [동적 쿼리](#동적-쿼리)
++ [수정 삭제 벌크 연산](#수정-삭제-벌크-연산)
++ [SQL function 호출하기](#SQL-function-호출하기)
++ [local test 분리](#local-test-분리)
+
+## 프로젝션과 결과 반환
+### 기본
++ 프로젝션 : select 대상 지정
++ 프로젝션 대상이 하나면 타입을 명확하게 지정할 수 있음
++ 프로젝션 대상이 둘 이상이면 튜플이나 DTO로 조회
++ Repository 계층 이하에서 사용하는 것이 좋다. (service, controller 계층 x)
+
+### DTO 조회
+**Querydsl 빈 생성**
++ 결과를 DTO 반환할 때 사용, 자주 사용함
++ 다음 3가지 방법 지원
+  + 프로퍼티 접근
+  + 필드 직접 접근
+  + 생성자 사용
+
+**프로퍼티 접근 - Setter**
+```java
+List<MemberDto> result = queryFactory
+     .select(Projections.bean(MemberDto.class,
+     member.username,
+     member.age))
+     .from(member)
+     .fetch();
+```
++ Dto class 에 기본 생성자가 필요함
++ Dto class 에 setter, getter 가 필요함
+
+**필드 직접 접근**
+```java
+List<MemberDto> result = queryFactory
+     .select(Projections.fields(MemberDto.class,
+     member.username,
+     member.age))
+     .from(member)
+     .fetch();
+```
+**생성자 사용**
+```java
+List<MemberDto> result = queryFactory
+     .select(Projections.constructor(MemberDto.class,
+     member.username,
+     member.age))
+     .from(member)
+     .fetch();
+}
+```
+**별칭이 다를 때**
+```java
+@Data
+public class UserDto {
+     private String name;
+     private int age;
+}
+List<UserDto> fetch = queryFactory
+     .select(Projections.fields(UserDto.class,
+         member.username.as("name"),
+         ExpressionUtils.as(
+            JPAExpressions
+                 .select(memberSub.age.max())
+                 .from(memberSub), "age")
+     )
+     ).from(member)
+     .fetch();
+```
++ 프로퍼티나, 필드 접근 생성 방식에서 이름이 다를 때 해결 방안
++ ExpressionUtils.as(source, alias) : 필드나 서브 쿼리에 별칭 적용
++ username.as("memberName") : 필드에 별칭 적용
+
+### @QueryProjection
+```java
+@Data
+public class MemberDto {
+     private String username;
+     private int age;
+     
+     public MemberDto() {
+     }
+     
+     @QueryProjection
+     public MemberDto(String username, int age) {
+         this.username = username;
+         this.age = age;
+     }
+}
+```
++ gradle -> other -> compileQuerydsl
++ QMemberDto 생성 확인
+
+**@QueryProjection 활용**
+```java
+List<MemberDto> result = queryFactory
+     .select(new QMemberDto(member.username, member.age))
+     .from(member)
+     .fetch();
+```
++ DTO 조회에서 생성자 방식과의 차이점
+  + DTO 생성자 사용 : 잘못된 코드라도 런타임 에러가 난다.
+  + @QueryProjection 사용 : 잘못된 코드라도 컴파일 에러가 난다.
++ 컴파일로 타입을 체크할 수 있는 가장 안전한 방법
++ DTO 에 QueryDSL 어노테이션을 유지해야 하는 점과 DTO 까지 Q 파일을 생성해야 하는 단점이 있다.(의존성 문제)
+
+## 동적 쿼리
+**동적 쿼리 해결하는 방식**
++ BooleanBuilder
++ Where 다중 파라미터 사용
+
+### BooleanBuilder
+```java
+private List<Member> searchMember1(String usernameCond, Integer ageCond) {
+     BooleanBuilder builder = new BooleanBuilder();
+     if (usernameCond != null) {
+        builder.and(member.username.eq(usernameCond));
+     }
+     if (ageCond != null) {
+        builder.and(member.age.eq(ageCond));
+     }
+     return queryFactory
+         .selectFrom(member)
+         .where(builder)
+         .fetch();
+}
+```
+
+### Where 다중 파라미터 사용
+```java
+private List<Member> searchMember2(String usernameCond, Integer ageCond) {
+     return queryFactory
+         .selectFrom(member)
+         .where(usernameEq(usernameCond), ageEq(ageCond))
+         .fetch();
+}
+private BooleanExpression usernameEq(String usernameCond) {
+    return usernameCond != null ? member.username.eq(usernameCond) : null;
+}
+private BooleanExpression ageEq(Integer ageCond) {
+    return ageCond != null ? member.age.eq(ageCond) : null;
+}
+```
++ where 조건에 null 값은 무시된다.
++ 메서드를 다른 쿼리에서도 **재활용** 할 수 있다.
++ 쿼리 자체의 가독성이 높아진다.
++ **조합 가능**하다
+
+```java
+private BooleanExpression allEq(String usernameCond, Integer ageCond) {
+     return usernameEq(usernameCond).and(ageEq(ageCond));
+}
+```
++ null 체크는 주의해서 처리해야 한다.
+
+## 수정 삭제 벌크 연산
+### 쿼리 한번으로 대량 데이터 수정
+```java
+long count = queryFactory
+     .update(member)
+     .set(member.username, "비회원")
+     .where(member.age.lt(28))
+     .execute();
+```
+### 기존 숫자에 1 더하기
+```java
+long count = queryFactory
+     .update(member)
+     .set(member.age, member.age.add(1)) // 곱하기 : multiply(x)
+     .execute();
+```
+### 쿼리 한번으로 대량 데이터 삭제
+```java
+long count = queryFactory
+     .delete(member)
+     .where(member.age.gt(18))
+     .execute();
+```
+### 주의
++ query 를 실행해도 DB에 반영되고 영속성 컨텍스트는 반영이 안된다.
++ 배치 쿼리를 실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
+
+## SQL function 호출하기
+SQL function 은 JPA 와 같이 Dialect 에 등록된 내용만 호출할 수 있다.
+```java
+String result = queryFactory
+     .select(Expressions.stringTemplate("function('replace', {0}, {1}, {2})",
+        member.username, "member", "M"))
+     .from(member)
+     .fetchFirst();
+```
++ lower 같은 ansi 표준 함수들은 querydsl 이 상당부분 내장하고 있다.
++ 따라서 다음과 같이 처리해도 결과는 같다.
+
+```java
+.where(member.username.eq(member.username.lower()))
+```
+
+## local test 분리
+### 프로파일 설정
+src/main/resorces/application.yml
+```yml
+spring:
+ profiles:
+   active: local
+```
+src/test/resource/application.yml
+```yml
+spring:
+ profiles:
+  active: test
+```
+
+### 샘플 데이터 추가
+```java
+@Profile("local")
+@Component
+@RequiredArgsConstructor
+public class InitMember {
+
+   private final InitMemberService initMemberService;
+
+   @PostConstruct
+   public void init() {
+      initMemberService.init();
+   }
+   
+   @Component
+   static class InitMemberService {
+   
+       @PersistenceContext
+       EntityManager em;
+
+       @Transactional
+       public void init() {
+           Team teamA = new Team("teamA");
+           Team teamB = new Team("teamB");
+           em.persist(teamA);
+           em.persist(teamB);
+
+           for (int i = 0; i < 100; i++) {
+               Team selectedTeam = i % 2 == 0 ? teamA : teamB;
+               em.persist(new Member("member" + i, i, selectedTeam));
+           }
+       }
+   }
+}
+```
+
+출처 - [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30137?tab=note)

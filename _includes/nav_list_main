@@ -1,0 +1,80 @@
+<!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+{% assign sum = site.posts | size %}
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style>
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) Spring-->
+        <span class="nav__sub-title">Spring</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /spring/base 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시-->
+                {% for category in site.categories %}
+                    {% if category[0] == "springBase" %}
+                        <li><a href="/categories/spring/base" class="">기초 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springError" %}
+                        <li><a href="/categories/spring/error" class="">에러 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springMVC" %}
+                        <li><a href="/categories/spring/mvc" class="">MVC ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springDB" %}
+                        <li><a href="/categories/spring/db" class="">DB ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "springSecurity" %}
+                        <li><a href="/categories/spring/security" class="">보안 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+      <span class="nav__sub-title">책</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "book_object" %}
+                        <li><a href="/categories/book/object" style="font-size:12px;">오브젝트 : 코드로 이해하는 객체지향 설계 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+      <span class="nav__sub-title">프로젝트</span>
+             <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "project_community" %}
+                        <li><a href="/categories/project/community" style="font-size:16px;">community ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "project_toyProject" %}
+                        <li><a href="/categories/project/toyProject" style="font-size:16px;">toyProject ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+  </ul>
+</nav>
+ 

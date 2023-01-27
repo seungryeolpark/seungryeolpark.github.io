@@ -1,0 +1,460 @@
+---
+title: "자바"
+categories: JP_TI
+---
+
+[1. Java](#java)  
+[2. Lambda(@functionalInterface)](#lambdafunctionalinterface)  
+[3. Stream API](#stream-api)  
+[4. JVM](#jvm)  
+[5. Call by Value vs Call by Reference](#call-by-value-vs-call-by-reference)  
+[6. String Immutable](#string-immutable)  
+[7. Overriding vs Overloading](#overriding-vs-overloading)  
+[8. WebServer&WebApplicationServer](#webserverwebapplicationserver)
+
+## Java
++ JVM만 설치하면 컴퓨터의 운영체제와 상관없이 작동한다.(운영체제에 독립적)
++ 기본 자료형을 제외한 모든 요소들이 객체로 표현
++ 객체 지향 개념의 특징인 캡슐화, 상속성, 다형성이 잘 적용된 언어
++ Garbage Collector를 통한 메모리 관리기능
++ 멀티쓰레드(Multi-thread)를 지원한다.
+
+### 객체지향 특징
++ 추상화
+  + 필요한 정보만을 중심으로 간소화하는 것을 의미한다.
+  + 프로그래밍 언어에서는 객체들의 공통적인 속성과 기능을 중심으로 추상화한다.
++ 캡슐화
+  + 객체에 필요한 데이터나 기능(메소드)을 책임이 있는 객체에 그룹화
++ 상속
+  + 상위 클래스의 기능을 하위 클래스가 사용할 수 있는 개념
+  + 상속이 필요한 이유는 중복되는 코드의 재사용성을 위함이다.
++ 다형성
+  + 객체지향은 객체간 관계를 디자인하는 프로그래밍인데, 다형성은 이 객체간 관계를 유연하게 해주는 특징이다.
+  + ex) '사람은 음식을 먹는다' 라는 명제에서 음식은 치킨이 될 수 있고, 라면이 될수도 있다. 음식을 다형성이라 할 수 있다.
+  + 인터페이스가 이런 다형성을 구현할 수 있도록 돕는 대표적인 개념이다.
+
+### 객체지향 5가지 원칙(SOLID)
++ 단일 책임 원칙(Single Responsibility Principle)
+  + 하나의 클래스는 하나의 책임만 가져야 한다.
+  + 변경사항이 있을 때, 애플리케이션의 파급 효과가 적으면 SRP 원칙을 잘 따른 것으로 볼 수 있다.
++ 개방 폐쇄 원칙(Open Closed Principle
+  + 높은 응집도와 낮은 결합도라는 원리로 설명할 수 있다.
+  + 확장에 열려있다 : 새로운 변경사항이 발생했을 때 유연하게 코드를 추가 또는 수정할 수 있다.
+  + 변경에 닫혀있다 : 객체를 직접 수정하지 않고도 변경사항을 적용할 수 있도록 설계해야 한다.
++ 리스코프 치환 원칙(Liskov Substitution Principle)
+  + 하위 클래스는 인터페이스 규약을 지켜서 작성되어야 한다.
++ 인터페이스 분리 원칙(Interface Segragation Principle)
+  + 범용 인터페이스 하나보다는 특정 클라이언트를 위한 여러 개의 인터페이스 분리가 더 좋다.
++ 의존관계 역전 원칙(Dependency Inversion Principle)
+  + 구체화(구현 클래스)가 아니라 추상화(인터페이스)에 의존해야 한다.
+
+### Java 8 특징
+1. lambda
+  + 함수를 하나의 표현식으로 나타낸 것을 의미한다.
+  + 람다는 함수형 프로그래밍 언어에서 사용되는 개념으로 메서드에 이름이 없어 익명 함수라고도 부릅니다.
+  + 장점
+    + 코드를 간결하게 작성할 수 있습니다.
+  + 단점
+    + 재활용이 불가능합니다.
+2. Optional
+  + null이 될 수 있는 객체를 담는 클래스입니다.
+  + 장점
+    + 명시적으로 반환값이 Null일 수 있음을 알려줍니다.
+    + 직접 null을 다루지 않아도 됩니다.
+3. 메소드 레퍼런스
+  + 메소드 레퍼런스는 람다의 축약 표현입니다.
+  + 다음과 같이 사용할 수 있습니다.
+    + 클래스 이름::메소드 이름
+    + 생성자::new
+4. stream
+  + stream의 데이터 흐름으로 람다를 사용할 수 있도록 제공합니다.
+5. Interface default, static method
+  + 인터페이스는 구현부가 없는 추상메소드만 가질 수 있었는데 default, static 지시어로 생성된 메서드는 구현부를 가질 수 있습니다.
+  + 차이점
+    + default 메서드
+      + 재정의 o
+      + 참조 변수로 호출
+    + static 메서드
+      + 재정의 x
+      + 클래스 메서드이기 때문에 객체 생성하지 않고 직접 사용
+6. LocalDateTime
+  + 불변 시간 정보를 가지고 있습니다.
+
+## Lambda(@functionalInterface)
++ 람다식은 결국 로컬 익명 구현객체를 생성하게 되지만, 이 람다식의 사용 목적은 인터페이스가 가지고 있는 메소드를 간편하게 즉흥적으로 구현해서 사용하는 것이 목적이다.
++ 람다식을 사용하기 위해서는 구현할 인터페이스가 필요하다.
++ 람다식으로 구현하기위한 인터페이스에는 조건이 하나 있는데 한개의 추상메소드만 가지고 있어야한다는 것이다.
++ 그리고 이런 인터페이스를 미리 함수적 인터페이스(@functionalInterface)라고 부른다. 즉 함수구현 전용 인터페이스라고 부르는 것이다.
++ @FunctionalInterface 어노테이션으로 이런 함수적 인터페이스를 명시할 수 있다.
+
+```java
+@FunctionalInterface
+public interface TestInterface{
+    public int plusAandB(int a, int b);
+    
+//  public int pulsAll(int ...a);
+//  컴파일 에러 발생
+}
+```
+@FunctionalInterface가 선언된 인터페이스에 추상메소드가 1개가 아니면 에러가 발생한다.
+
+```java
+InterfaceA1 a1 = (int a) -> {System.out.println("a:" + a); };
+//매개인자 자료형 생략
+InterfaceA1 a2 = (a) -> {System.out.println("a:" + a); };
+
+//매개인자가 하나뿐이라 소괄호 생략
+InterfaceA1 a3 = a -> {System.out.println("a:" + a); };
+//함수의 실행문이 한개라 중괄호 생략
+InterfaceA1 a4 = a -> System.out.println("a:" + a);
+
+TestInterface t3 = a -> { return "a:" + String.valueOf(a); };
+//함수의 실행문이 한개이며, 리턴문만 있을 경우 중괄호와 더불어 return문도 생략이 가능하다.
+TestInterface t4 = a -> "a:" + String.valueOf(a);
+
+//매개인자가 없는 경우에는 빈 소괄호를 사용해야 한다.
+InterfaceA1 a2 = () -> System.out.println("인자가 없는 함수 구현"); };
+```
+
+## Stream API
++ 데이터를 추상화하고, 처리하는데 자주 사용되는 함수들을 정의
++ 여기서 데이터 추상화는 데이터 종류에 상관없이 같은 방식으로 데이터를 처리할 수 있다는 것을 의미하며, 그에 따라 재사용성을 높일 수 있다.
++ Stream API를 활용하면 코드의 라인수도 줄이고, 가독성도 높일 수 있다.
+
+### Stream API의 특징
++ 원본의 데이터를 변경하지 않는다.
++ 일회용이다.
++ 내부 반복으로 작업을 처리한다.
+
+### Stream API 연산 종류
+1. 생성하기
+  + Stream 객체를 생성하는 단계
+  + Stream은 재사용이 불가능하므로, 닫히면 다시 생성해주어야 한다.
+    + asList
+    + stream
+    + of
+    + range
+2. 가공하기
+  + 원본의 데이터를 별도의 데이터로 가공하기 위한 중간 연산
+  + 연산 결과를 Stream으로 다시 반환하기 때문에 연속해서 중간 연산을 이어갈 수 있다.
+    + 필터링 - filter
+    + 데이터 변환 - map
+    + 정렬 - sorted
+    + 중복 제거 - Distinct
+    + 특정 연산 수행 - peek
+      + Stream의 각각 요소들에 대해 특정 작업을 수행할 뿐 결과에 영향을 주지 않는다.
+    + 원시 Stream <-> Stream
+      + 일반적인 Stream 객체 -> mapToInt, mapToLong(), mapToDouble()이라는 특수한 Mapping 연산을 지원
+      + 그 반대로 원시객체는 mapToObject를 통해 일반적인 Stream 객체로 바꿀 수 있다.
+3. 결과만들기
+  + 가공된 데이터로부터 원하는 결과를 만들기 위한 최종 연산
+  + Stream의 요소들을 소모하면서 연산이 수행되기 때문에 1번만 처리가능하다.
+    + 최댓값/최솟값/총합/평균/갯수 - Max/Min/Sum/Average/Count
+    + 데이터 수집 - collect
+      + Collectors.toList()
+      + Collectors.joining(delimiter, prefix, suffix)
+        + delimiter : 각 요소 중간에 들어가 요소를 구분시켜주는 구분자
+        + prefix : 결과 맨 앞에 붙는 문자
+        + suffix : 결과 맨 뒤에 붙는 문자
+      + Collectors.averagingInt(), Collectors.summingInt(), Collectors.summarizingInt()
+      + Collectors.groupingBy()
+      + Collectors.partitioningBy()
+    + 조건 검사 - Match
+      + anyMatch : 1개의 요소라도 해당 조건을 만족하는가
+      + allMatch : 모든 요소가 해당 조건을 만족하는가
+      + nonMatch : 모든 요소가 해당 조건을 만족하지 않는가
+    + 특정 연산 수행 - forEach
+
+## JVM(Java Virtual Machine)
++ 자바 가상 머신으로 자바와 운영체제 사이에서 중개자 역할을 수행한다.
++ 자바가 운영체제에 구애 받지 않고 프로그램을 실행할 수 있도록 도와줍니다.
++ 가비지 컬렉터를 사용한 메모리 관리도 자동으로 수행하며, 다른 하드웨어와 다르게 레지스터 기반이 아닌 스택 기반으로 동작합니다.
+
+### 자바 프로그램 실행 단계
+
+![0](https://user-images.githubusercontent.com/48073115/148403573-9d90fe48-8cf5-4dec-8ede-d5f48682b834.png)
+
+1. 자바 컴파일러에 의해 자바 소스 파일은 바이트 코드로 반환됩니다.
+2. 이러한 바이트 코드를 JVM에서 읽어들인 다음에, 복잡한 과정을 거쳐 어떤 운영체제든 간에 프로그램을 실행할 수 있도록 만드는 것입니다.
+
+### JVM 메모리 구조
+
+![1](https://user-images.githubusercontent.com/48073115/148404188-79469341-57ca-4a1b-8155-003e7400a181.png)
+
++ JVM 구조는 크게 Garbage Collector, Execution Engine, Class Loader, Runtime Data Area로 나눌 수 있습니다.
++ Class Loader
+  + JVM 내로 클래스 파일을 로드하고, 링크를 통해 배치하는 작업을 수행하는 모듈이다.
++ Exceution Engine
+  + Class Loader를 통해 JVM 내의 Runtime Data Area에 배치된 바이트 코드들을 명령어 단위로 읽어서 실행합니다.
++ Garbage Collector
+  + Garbage Collector는 힙 메모리 영역에 생성된 객체들 중에서 참조되지 않은 객체들을 탐색 후 제거하는 역할을 합니다.
++ Runtime Data Area
+  + JVM내의 메모리 영역으로 자바 애플리케이션을 실행할 때 사용되는 데이터들을 적재하는 영역입니다.
+
+![2](https://user-images.githubusercontent.com/48073115/148405003-249aacc2-345f-43fa-a4ae-a03a458c59a8.png)
+
++ Method area
+  + 모든 쓰레드가 공유하는 메모리 영역입니다. 메소드 영역은 클래스, 인터페이스, 메소드, 필드, Static 변수 등의 바이트 코드를 보관합니다.
++ Heap area
+  + 모든 쓰레드가 공유하며, new 키워드로 생성된 객체와 배열이 생성되는 영역입니다.
+  + 또한 메소드 영역에 로드된 클래스만 생성이 가능하고 Garbage Collector가 참조되지 않는 메모리를 확인하고 제거하는 영역입니다.
++ Stack area
+  + 메서드 호출 시마다 각각의 스택 프레임(그 메서드만을 위한 공간)이 생성합니다.
+  + 메서드 안에서 사용되는 값들을 저장하고, 호출된 메서드의 매개변수, 지역변수, 리턴 값 및 연산 시 일어나는 값들을 임시로 저장합니다.
+  + 마지막으로 메서드 수행이 끝나면 프레임별로 삭제합니다.
++ PC Register
+  + 쓰레드가 시작될 때 생성되며, 생성될 때 마다 생성되는 공간으로 쓰레드마다 하나씩 존재합니다.
+  + 쓰레드가 어떤 부분을 무슨 명령으로 실행해야할 지에 대한 기록을 하는 부분으로 현재 수행중인 JVM 명령의 주소를 갖습니다.
++ Native method stack
+  + 자바 외 언어로 작성된 네이티브 코드를 위한 메모리 영역입니다.
+
+### 다양한 GC 알고리즘
++ GC를 수행하기 위해 Stop the World에 의해 애플리케이션이 중지되는 것이 있다.
++ Heap 사이즈가 커지면서 애플리케이션의 지연현상이 두드러지게 되었고, 이를 막기 위해 다양한 GC 알고리즘을 지원하고 있다.
+
+![3](https://user-images.githubusercontent.com/48073115/148406788-ce558ce0-7838-43f2-add2-6ec8ab06f8b9.png)
+
+#### Mark-Sweep-Compaction
++ 기본적인 GC 과정
+  + 사용되지 않는 객체를 식별하는 작업(Mark)
+  + 사용되지 않는 객체를 제거하는 작업(Sweep)
+  + 파편화된 메모리 영역을 앞에서부터 채워나가는 작업(Compaction)
+
+#### Serial GC
++ 순차적인 GC 방식
++ 옛날 GC를 처리하는 스레드가 하나이기 때문에 순차적으로 동작할 수 밖에 없다.
+
+#### Parallel GC
++ GC를 처리하는 스레드를 여러개로 늘려 좀 더 빠른 동작이 가능하게한 방식
++ Serial GC보다 STW(Stop The World) 시간이 좀 더 적게 걸리는 Parallel GC에서의 Java 애플리케이션이 좀 더 매끄럽게 동작한다.
+
+#### Parallel Old GC
++ Parallel GC를 조금 더 업그레이드한 버전이다.
++ Parallel GC에서 Old 영역의 GC 알고리즘을 개선한 버전이다.
++ Serial GC, Parallel GC 알고리즘은 Mark-Sweep-Compaction 이었으며, Parallel Old GC 에서는 개선된 버전인 Mark-Summary-Compaction 알고리즘을 사용한다.
++ Summary 단계에서는 이미 GC가 수행된 영역에서 살아있는 객체를 식별하는 작업을 진행한다.
+
+#### CMS GC
++ 앞의 GC 보다 좀 더 개선된 방식이다.
++ 개선이 된 만큼 성능은 좋아졌지만 GC의 과정은 좀 더 복잡해진 방식이다.
++ CMS는 GC 대상을 최대한 자세히 파악한 후, 정리하는 시간(STW가 발생하는 시간)을 짧게 가져가겠다는 GC 방식이다.
++ 다만 GC 대상을 파악하는 과정이 복잡한 여러단계로 수행되기 때문에 다른 GC 대비 CPU 사용량이 높다
+
+#### G1 GC
++ G1 GC는 큰 힙 메모리에서 짧은 GC 시간을 보장하는데 그 목적을 둔다.
++ 전체 힙 메모리 영역을 Region 이라는 특정한 크기로 나눠서 각 Region의 상태에 따라 그 Region에 역할(Eden, Survivor, Old)이 동적으로 부여되는 상태이다.
+
+![4](https://user-images.githubusercontent.com/48073115/148409602-54fa68f8-015b-48a8-8999-473c43c2fdce.png)
+
+G1 GC에서는 그동안 봐왔던 Heap 영역에서 보지 못한 Humongous, Available/Unused 이 존재하며 두 Region에 대한 역할은 아래와 같다.
++ Humongous
+  + Region 크기의 50%를 초과하는 큰 객체를 저장하기 위한 공간이며, 이 Region 에서는 GC 동작이 최적으로 동작하지 않는다.
++ Available/Unused
+  + 아직 사용되지 않은 Region을 의미한다.
+
++ G1 GC에서 Young GC를 수행할 때는 STW 현상이 발생하며, STW 시간을 최대한 줄이기 위해 멀티스레드로 GC를 수행한다.
++ Young GC는 각 Region 중 GC대상 객체가 가장 많은 Region(Eden or Survivor 역할)에서 수행된다.
++ 이 Region에서 살아남은 객체를 다른 Region(Survivor 역할)으로 옮긴 후, 비워진 Region을 사용가능한 Region으로 돌리는 형태로 동작한다.
+
+### JRE, JDK
+#### 자바 런타임 환경(JRE, Java Runtime Environment)
++ JRE는 자바 클래스 라이브러리, 자바 가상 머신, 자바 클래스 로더를 포함하고 있습니다.
+
+#### 자바 개발 키트(JDK, Java Development Kit)
++ JDK는 JRE를 포함하고 있고 JRE는 JVM을 포함하고 있습니다. 따라서 JDK를 설치하면 JRE, JVM이 자동으로 다 설치됩니다.
++ JDK는 javac 등의 컴파일러, 디버거 등을 포함하고 있습니다. .java 파일을 만들어서 실행(빌드)하면 컴파일 작업을 거쳐 .class 라는 파일이 자동으로 생성됩니다.
+
+## Call by Value vs Call by Reference
+### Call by Value
++ 실제 매개변수의 값은 형식 매개변수에 복사되고 두 유형의 매개변수는 서로 다른 메모리에 저장됩니다.
++ 따라서 함수 내에서 변경은 실제로 전달된 실제 매개변수에 반영되지 않습니다.
++ 장점
+  + 복사하여 처리하기 때문에 매개변수로 전달된 값이 보존이 되고 안전합니다.
++ 단점
+  + 복사를 하기 때문에 메모리 사용량이 늘어납니다.
+
+### Call by Reference
++ 실제 매개변수와 형식 매개변수 모두 동일한 메모리를 참조하므로 함수 내에서 변경한 내용이 실제로 전달된 실제 매개변수에 반영됩니다.
++ 장점
+  + 복사하지 않고 직접 참조를 하기 때문에 실행속도가 빠릅니다.
++ 단점
+  + 장점이자 단점인데, 직접 참조를 하기 때문에 원래의 값이 영향을 받습니다.
+
+## String Immutable
++ String str = "" 는 String literal로 생성하고 String str = new String(""); 는 new 연산자로 생성하기 때문에 문자열이 같아도 저장소에 공유되지 않고 힙영역에 각각 별도로 저장되었다.
+
+## Overriding vs Overloading
+### Overriding
++ 상속 관계에 있는 클래스 간에 같은 이름의 메서드를 정의하는 것을 말한다.
+
+### Overloading
++ 두 메서드가 같은 이름을 갖고 있으나 인자의 수나 자료형이 다른 경우를 말한다.
+
+
+## Class, Object, Instance
+### Class(클래스)
++ 객체를 만들어 내기 위한 설계도
++ 연관되어 있는 변수와 메서드의 집합
+
+### Object(객체)
++ 소프트웨어 세계에 구현할 대상
++ 클래스에 선언된 모양 그대로 생성된 실체
++ 특징
+  + **클래스의 인스턴스**라고도 부른다.
+  + 객체는 모든 인스턴스를 대표하는 포괄적인 의미를 갖는다.
+  + oop의 관점에서 클래스의 타입으로 선언되었을때 **객체**라고 부른다.
+
+### Instance(인스턴스)
++ 설계도를 바탕으로 소프트웨어 세계에 구현된 구체적인 실체
+  + 객체를 소프트웨어에 실체화하면 그것을 **인스턴스**라고 부른다.
+  + 실체화된 인스턴스는 메모리에 할당된다.
++ 특징
+  + 인스턴스는 객체에 포함된다고 볼 수 있다.
+  + oop의 관점에서 객체가 메모리에 할당되어 실제 사용될 때 **인스턴스**라고 부른다.
+  + 인스턴스는 어떤 원본(추상적인 개념)으로 부터 **생성된 복제본**을 의미한다.
+
+## Interface, Abstract
+### Interface
++ 일종의 추상 클래스
++ 오직 추상메서드와 상수만을 맴버로 갖는다.
++ Implements 키워드를 사용
++ 상속의 관계가 없는 클래스간 서로 공동되는 로직을 구현하여 쓸 수 있도록 한다.
++ Extends는 하나의 클래스만 상속 가능하나 Interface는 다중 상속이 가능하다.
+
+### Abstract
++ 추상메소드를 하나 이상 가진 클래스
++ 자신의 생성자로 객체 생성 불가능
++ 하위 클래스를 참조하여 상위 클래스의 객체를 생성
++ 하위 클래스를 제어하기 위해 사용
+
+### 공통점
++ New 연산자로 인스턴스 생성 불가능
++ 프로토타입만 있는 메서드를 갖는다.
++ 사용하기 위해서는 하위클래스에서 확장/구현해야 한다.
+
+### 차이점
++ 사용하는 키워드가 다르다.
++ Interface는 메서드 선언만 가능하고 Abstract는 일반 메서드도 사용할 수 있다.
++ Interface는 Has-A로 ~할 수 있다, Abstract는 Is-A로 ~이다
+
+## Garbage Collection
++ 시스템에서 더 이상 사용하지 않는 동적 할당된 메모리 블록을 찾아 자동으로 다시 사용 가능한 자원으로 회수 하는 것
++ 시스템에서 가비지 컬렉션을 수행하는 부분을 가비지 컬렉터라 부른다.
++ 자바에서는 메모리 문제를 신경쓰지 않아도 된다.
+
+## Primitive type, Reference type
+### Primitive type
++ 변수 값 자체를 저장(정수형, 실수형, 문자형, 논리형)
++ Wrapper Class를 통해 객체로 변환 가능
+
+### Reference type
++ 메모리 상에 객체가 있는 위치를 저장(Class, Interface, Array 등)
+
+### Wrapper Class
++ Primitive type으로 표현할 수 있는 간단한 데이터를 객체로 만들어야 하는 경우, 그러한 기능을 지원
+
+## Thread
++ 프로세스 내에서 동시에 실행되는 독립적인 실행 단위
++ 자원을 많이 사용하지 않고 구현이 쉬우며 범용성이 높다.
++ 장점
+  + 빠른 프로세스 생성
+  + 적은 메모리 사용
+  + 쉬운 정보 공유
++ 단점
+  + 교착 상태에 빠질 수 있다.
+
+### Process
++ 운영체제에서 실행중인 하나의 프로그램(하나 이상의 쓰레드를 포함한다.)
+
+### 교착상태
++ 다중 프로그래밍 체제에서 하나 또는 그 이상의 프로세스가 수행할 수 없는 어떤 특정 시간을 기다리고 있는 상태
+
+### Thread와 Process 차이
++ 프로세스 내에서 실행되는 각각의 일을 스레드라고 한다.
++ 스레드는 프로세스 내에서 실행되는 세부 작업 단위로 여러 개의 스레드가 하나의 프로세스를 이루게 되는 것이다.
+
+## 접근 제한자
+### Public
++ 접근 제한이 없다.(같은 프로젝트 내에 어디서든 사용 가능)
+
+### Protected
++ 같은 패키지 내, 다른 패키지에서 상속 받아 자손 클래스에서 접근 가능
+
+### Default
++ 같은 패키지 내에서만 접근 가능
+
+### Private
++ 같은 클래스 내에서만 접근 가능
+
+## Singleton Design Pattern
++ 클래스 인스턴스가 하나만 만들어지도록 하고, 그 인스턴스에 대한 전역 접근을 제공한다.
+
+## String, StringBuffer 차이
+### String
++ 자바의 기본 데이터 타입인 int, float, char 등과 다르게 데이터 타입이 아닌 객체이다.
++ 불변의 객체이다.(final char 배열 형태이다.) -> 내용의 추가와 삭제가 되지 않는다.
+
+### StringBuffer
++ 문자열을 추가하거나 변경 할 때 주로 사용하는 객체이다.
+
+### String, StringBuffer 차이
++ 문자열을 더할 때 StringBuffer 객체는 단 한번만 생성된다.
++ String은 + 연산이 있을 때마다 새로운 String 객체가 생성된다.(문자열 간 + 연산이 있는 경우 자바는 자동으로 새로운 String 객체를 만들어 낸다.)
++ StringBuffer는 String보다 무거운 편에 속한다.
++ StringBuffer 객체를 생성하는 것은 일반 String을 사용하는 것보다 메모리 사용량도 많고 속도도 느리다.
++ 따라서 문자열 추가나 변경등의 작업이 많을 경우에는 StringBuffer, 문자열 변경 작업이 거의 없는 경우에는 String을 사용하는 것이 좋다.
+
+## 자바의 메모리 영역
+### 메서드 영역
++ static 변수, 전역변수, 코드에서 사용되는 class 정보 등이 올라간다.
++ 코드에서 사용되는 class들을 로더로 읽어 class별로 런타임 필드데이터, 메서드 데이터 등을 분류해 저장한다.
+
+### 스택
++ 지역변수, 함수(메서드) 등이 할당되는 LIFO(Last In First Out) 방식의 메모리
+
+### 힙
++ new 연산자를 통한 동적 할당된 객체들이 저장되며, Garbage Collection에 의해 메모리가 관리되어 진다.
+
+## DAO, DTO
+### DAO
++ 데이터베이스의 데이터에 접근을 위한 객체
++ 데이터베이스에 접근을 위한 로직과 비즈니스 로직을 분리하기 위해서 사용한다.
++ DB를 사용해 데이터를 조회하거나 조작하는 기능을 전담하도록 만든 오브젝트
+
+### DTO
++ 각 계층간 데이터 교환을 위한 객체
++ 여기서 말하는 계층이란 Controller, View, Business Layer, Persistent Layer를 말한다.
++ VO(Value Object)로도 말해진다.
+
+## 변수 명명법
+### 헝가리언 표기법
++ 자료형을 식별자에 같이 포함
++ ex) int inum; int int_num;
+
+### 파스칼 표기법
++ 식별자가 한 단어나 혹은 여러 단어로 조합, 각 단어의 첫문자만 대문자로
++ ex) KorScore
+
+### 캐멀 표기법
++ 모든 단어를 공백없이 조합, 첫단어의 첫문자는 소문자로
++ ex) korScore
+
+### 스네이크 표기법
++ ex) kor_score
+
+## WebServer&WebApplicationServer
+### WebServer
++ 정적 컨텐츠(HTML, CSS, JS, 이미지 등)을 사용자에게 제공하는 서버, HTTP 프로토콜을 기반으로 클라이언트의 요청을 서비스하는 기능을 담당한다.
++ 기능
+  + 정적 컨텐츠 제공 : WAS를 거치지 않고 바로 제공
+  + 동적 컨텐츠 제공을 위한 요청 전달 : 클라이언트 요청을 WAS에 보내고 WAS에서 처리한 결과를 클라이언트에 전달
++ Client의 요청에서 가장 앞에서 요청에 대한 데이터를 만들어 응답한다
++ ex) Apach, nginx, llS, tMax
+
+### WebApplicationServer
++ WAS, 웹 컨테이너, 서블릿 컨테이너로 불리우며 DB 조회 및 다양한 로직 처리 요구시 동적인 컨텐츠를 제공하기 위해 만들어진 애플리케이션 서버로, 동적 컨텐츠를 제공하는 서버
++ 기능
+  + 프로그램 실행 환경 및 DB 접속 기능 제공
+  + 여러 트랜잭션 관리 기능
+  + 업무를 처리하는 비즈니스 로직 수행
++ ex) Tomcat, Jeus, JBoss

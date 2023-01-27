@@ -1,0 +1,20 @@
+# main links
+main:
+  #- title: "Quick-Start Guide"
+  #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+#  - title: "스프링"
+#    sublinks:
+#      - title: "기초"
+#        url: /spring-base/
+#      - title: "오류"
+#        url: /spring-error/
+#  - title: "취업준비"
+#    url: /jobPreparation/
+  # - title: "About"
+  #   url: https://mmistakes.github.io/minimal-mistakes/about/
+  # - title: "Sample Posts"
+  #   url: /year-archive/
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  # - title: "Sitemap"
+  #   url: /sitemap/

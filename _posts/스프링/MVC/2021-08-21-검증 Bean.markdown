@@ -1,0 +1,39 @@
+---
+title: 검증 Bean
+categories: springMVC
+---
+
+### 스프링 부트는 자동으로 글로벌 Validator로 등록한다.
++ LocalValidatorFactoryBean 을 글로벌 Validator 로 등록한다.
++ Validator 는 @NotNull 같은 어노테이션을 보고 검증을 수행한다.
++ 글로벌 Validator 가 적용되어 있기 때문에, @Valid, @Validated 만 적용하면 된다.
++ 검증 오류가 발생하면, FieldError, ObjectError 를 생성해서 BindingResult 에 담아준다.
+
+### 검증 순서
++ 1.@ModelAttribute 각각의 필드에 타입 변환 시도
+  + 성공하면 다음으로
+  + 실패하면 typeMismatch 로 FieldError 추가
++ 2.Validator 적용
+
+### 바인딩에 성공한 필드만 Bean Validaton 적용
++ BeanValidator 는 바인딩에 실패한 필드는 BeanValidation 을 적용하지 않는다.
++ 타입 변환에 성공해서 바인딩에 성공한 필드여야 BeanValidation 적용이 의미 있다.
++ @ModelAttribute -> 각각의 필드 타입 변환시도 -> 변환에 성공한 필드만 BeanValidation 적용
++ example
+  + itemName 에 문자 "A" 입력 -> 타입 변환 성공 -> itemName 필드에 BeanValidation 적용
+  + price 에 문자 "A" 입력 -> "A" 를 숫자 타입 변환 시도 실패 -> typeMismatch FieldError 추가 -> pirce 필드는 BeanValidation 적용 x
+
+### @NotNull, @NotEmpty, @NotBlank
+
+#### @NotNull
++ null 만 허용하지 않습니다.
++ "" 나 " " 은 허용합니다.
++ null 이 들어오게 되면, **로직에 예상치 못한 오류**가 발생하거나 **문제가 생길 경우** 사용해야 합니다.
++ 초기화나 공백의 값이 들어와 저장은 되야하지만 null 로 들어온 경우 오류가 나는 변수를 받을 때 사용
+
+#### @NotEmpty
++ null 과 "" 둘 다 허용하지 않습니다.
++ " " 은 허용합니다.
+
+#### @NotBlank
++ null 과 "", " " 모두 허용하지 않습니다.

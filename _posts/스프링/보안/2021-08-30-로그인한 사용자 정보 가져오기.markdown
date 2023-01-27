@@ -1,0 +1,78 @@
+---
+title: Thymeleaf Spring Security 표현식
+categories: springSecurity
+---
+
+### 1. Bean 에서 사용자 정보 얻기
+전역에 선언된 SecurityContextHolder 을 이용하여 가져오는 방법
+```java
+Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+UserDetails userDetails = (UserDetails)principal; 
+
+String username = principal.getUsername();
+String password = principal.getPassword();
+```
+
+### 2. Controller 에서 사용자 정보 얻기
+@Controller 로 선언된 bean 객체에서는 메서드 인자로 Principal 객체에 직접 접근할 수 있는 추가적인 옵션이 있다.
+```java
+@Controller public class SecurityController {
+  
+  @GetMapping("/username") 
+  @ResponseBody 
+  public String currentUserName(Principal principal) {
+    return principal.getName(); 
+  } 
+}
+```
+
+principal 객체 뿐만 아니라 authentication 토큰 또한 사용할 수 있다.
+```java
+@Controller public class SecurityController {
+  
+  @GetMapping("/username") 
+  @ResponseBody public String currentUserName(Authentication authentication) {
+    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    
+    return userDetails.getUsername(); 
+  } 
+}
+```
+
+### 3. @AuthenticationPrincipal
+Spring Security 3.2 부터 어노테이션을 이용하여 현재 로그인한 사용자 객체를 인자에 주입할 수 있다.
+
+만약 UserDetails 를 구현한 CustomUser 클래스가 있고, UserDetailsService 구현체에서 CustomUser 객체를 반환한다고 가정한다.
+
+```java
+@Data public class CustomUser implements UserDetails {
+  // ... 
+}
+```
+
+```java
+@Service public class UserSerivce implements UserDetailsService {
+  
+  @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
+    CustomUser customUser = null;
+    // ... DB 등을 통해 사용자 정보를 셋팅 
+    
+    return customUser; 
+  }
+}
+```
+
+다음과 같이 @AuthenticationPrincipal 를 이용하여 CustomUser 객체를 인자에 넘겨줄 수 있다.
+```java
+@Controller public class SecurityController {
+  
+  @GetMapping("/messages/inbox") 
+  public ModelAndView currentUserName(@AuthenticationPrincipal CustomUser customUser) {
+    String username = customUser.getUsername(); 
+    
+    // .. find messages for this user and return them ... 
+  } 
+}
+```
+
+출처 - [[Spring Security] 현재 로그인한 사용자 정보 가져오기](https://itstory.tk/entry/Spring-Security-%ED%98%84%EC%9E%AC-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%9C-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0)
