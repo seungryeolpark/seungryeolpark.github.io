@@ -5,7 +5,8 @@ categories: cs-ds
 
 [1. Stack](#Stack)  
 [2. Queue](#Queue)  
-[3. Stack 으로 Queue 구현](#Stack-으로-Queue-구현)
+[3. Stack 으로 Queue 구현](#Stack-으로-Queue-구현)  
+[4. Deque](#Deque)
 
 ## Stack
 + 선형 자료구조이다.
@@ -50,3 +51,22 @@ class StackQueue {
     }
 }
 ```
+
+## Deque
++ 양쪽 끝에서 삽입과 삭제가 모두 가능한 자료구조
++ 선형 자료 구조
++ Stack(LIFO), Queue(FIFO)처럼 활용이 가능하다.
++ Deque 의 시간 복잡도
+  + 삽입, 삭제, 조회(TOP) : O(1)
+
+### Deque 주요 명령어
++ addFirst : head 에 자료 삽입
++ addLast : tail 에 자료 삽입
++ removeFirst : head 의 자료 제거
++ removeLast : tail 의 자료 제거
++ peekHead : head 의 자료 반환 (제거 x)
++ peekTail : tail 의 자료 반환 (제거 x)
+
+### Deque 구현
++ 배열과 리스트로 구현하는 두 가지 방법이 존재한다.
++ 일반적으로 배열로 구현하는 것이 속도가 빠르다.

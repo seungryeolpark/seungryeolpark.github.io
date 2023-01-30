@@ -20,3 +20,18 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+<span class="nav__sub-title">프로젝트</span>
+             <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "project_community" %}
+                        <li><a href="/categories/project/community" style="font-size:16px;">community ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "project_toyProject" %}
+                        <li><a href="/categories/project/toyProject" style="font-size:16px;">toyProject ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
