@@ -44,6 +44,7 @@
                 {% endfor %}
             </ul>
       </li>
+      <br>
       <li>
         <span class="nav__title">언어</span>
         <li>
@@ -84,7 +85,17 @@
                     {% endfor %}
                 </ul>
         </li>
+        <li>
+            <span class="nav__sub-title">Javascript</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "javascriptBase" %}
+                        <li><a href="/categories/javascript/base class="">DB ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
       </li>
+      <br>
       <li>
         <span class="nav__title">책</span>
             <li>
