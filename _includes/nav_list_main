@@ -88,8 +88,8 @@
             <span class="nav__sub-title">Javascript</span>
                 <ul>
                     {% for category in site.categories %}
-                        {% if category[0] == "springSecurity" %}
-                            <li><a href="/categories/spring/security" class="">보안 ({{category[1].size}})</a></li>
+                        {% if category[0] == "javascriptBase" %}
+                            <li><a href="/categories/javascript/base" class="">기초 ({{category[1].size}})</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
