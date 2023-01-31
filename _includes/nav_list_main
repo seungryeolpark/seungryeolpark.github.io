@@ -44,8 +44,8 @@
                 {% endfor %}
             </ul>
       </li>
-      <div>
-        <span class="nav__title">언어</span>
+      <li>
+        <span class="nav__sub-title">언어</span>
         <li>
             <span class="nav__sub-title">Spring</span>
                 <ul>
@@ -83,20 +83,20 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-        </div>
+        </li>
         <li>
             <span class="nav__sub-title">Javascript</span>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "javascriptBase" %}
-                        <li><a href="/categories/javascript/base class="">기초 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+                <ul>
+                    {% for category in site.categories %}
+                        {% if category[0] == "javascriptBase" %}
+                            <li><a href="/categories/javascript/base class="">기초 ({{category[1].size}})</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+        </li>
       </li>
-      <br>
-      <div>
-        <span class="nav__title">책</span>
+      <li>
+        <span class="nav__sub-title">책</span>
             <li>
                 <span class="nav__sub-title">자바</span>
                     <ul>
@@ -114,7 +114,7 @@
                         {% endfor %}
                     </ul>
             </li>
-      </div>
+      </li>
   </ul>
 </nav>
  
