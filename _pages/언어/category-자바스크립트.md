@@ -1,5 +1,5 @@
 ---
-title: "DB"
+title: "기초"
 layout: archive
 permalink: /categories/javascript/base
 author_profile: true
