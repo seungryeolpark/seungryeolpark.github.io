@@ -1,5 +1,5 @@
 ---
-title: "기초"
+title: "스프링 기초"
 layout: archive
 permalink: /categories/spring/base
 author_profile: true

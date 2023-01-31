@@ -1,5 +1,5 @@
 ---
-title: "기초"
+title: "자바스크립트 기초"
 layout: archive
 permalink: /categories/javascript/base
 author_profile: true
