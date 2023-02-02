@@ -47,7 +47,7 @@
       <li>
         <span class="nav__sub-title">언어</span>
         <li>
-            <span class="nav__sub-title">Spring</span>
+            <span class="nav__sub-title2">Spring</span>
                 <ul>
                     {% for category in site.categories %}
                         {% if category[0] == "springBase" %}
@@ -85,7 +85,7 @@
                 </ul>
         </li>
         <li>
-            <span class="nav__sub-title">Javascript</span>
+            <span class="nav__sub-title2">Javascript</span>
                 <ul>
                     {% for category in site.categories %}
                         {% if category[0] == "javascriptBase" %}
@@ -98,7 +98,7 @@
       <li>
         <span class="nav__sub-title">책</span>
             <li>
-                <span class="nav__sub-title">자바</span>
+                <span class="nav__sub-title2">자바</span>
                     <ul>
                         {% for category in site.categories %}
                             {% if category[0] == "book_object" %}

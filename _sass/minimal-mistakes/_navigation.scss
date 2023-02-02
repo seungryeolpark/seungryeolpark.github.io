@@ -499,6 +499,16 @@
   border-bottom: 1px solid $border-color;
 }
 
+.nav__sub-title2 {
+  margin: 0;
+  padding: 0.25rem 0;
+  font-family: $sans-serif-narrow;
+  font-size: $type-size-7;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid $border-color;
+}
+
 /*
      Table of contents navigation
      ========================================================================== */
