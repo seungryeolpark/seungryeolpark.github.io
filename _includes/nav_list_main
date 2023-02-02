@@ -45,6 +45,7 @@
             </ul>
       </li>
       <li>
+        <!-- 언어 -->
         <span class="nav__sub-title">언어</span>
         <li>
             <span class="nav__sub-title2">Spring</span>
@@ -96,6 +97,21 @@
         </li>
       </li>
       <li>
+        <!-- DB -->
+        <span class="nav__sub-title">DB</span>
+            <li>
+                <span class="nav__sub-title2">Oracle</span>
+                    <ul>
+                        {% for category in site.categories %}
+                            {% if category[0] == "oracleBase" %}
+                                <li><a href="/categories/oracle/base" style="font-size:12px;">기초({{category[1].size}})</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+            </li>
+      </li>
+      <li>
+        <!-- 책 -->
         <span class="nav__sub-title">책</span>
             <li>
                 <span class="nav__sub-title2">자바</span>
